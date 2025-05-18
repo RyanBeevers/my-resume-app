@@ -1,0 +1,59 @@
+.resume-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background-color: var(--panel-bg);
+  color: var(--text);
+  font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+  padding: 2rem 3rem;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .resume-container {
+    padding-bottom: 50px; /* or height of your mobile nav */
+  }
+}
+
+.cv-tag {
+  font-weight: 900;
+  font-size: 1.6rem;
+  color: var(--accent);
+}
+
+.name {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--highlight);
+  margin: 0;
+  /* text-align: center; */
+
+}
+
+.title {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--secondary-text);
+  margin-top: 0.1rem;
+  /* text-align: center; */
+
+}
+
+.section-title {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+}
+
+.job-header {
+  color: var(--highlight);
+}
+
+.job-title {
+  text-transform: lowercase;
+}
+
+.job-dates {
+  color: var(--secondary-text);
+  text-transform: lowercase;
+}
