@@ -1,75 +1,53 @@
-<p-panel class="resume-panel" [toggleable]="false" [collapsed]="false" styleClass="resume-container">
+<div>
+  <button (click)="exportToPdf()">Export to PDF</button>
+</div>
+<p-panel class="resume-panel" [toggleable]="false" [collapsed]="false" styleClass="resume-container" #contentToConvert>
   <div class="header">
     <div class="cv-tag"><h1>&lt;cv&gt;</h1></div>
   </div>
   <div>
-    <h1 class="name">Ryan Beevers</h1>
+    <h1 class="name">{{ name }}</h1>
     <br>
-    <h3 class="title">(Full Stack Developer – Java / Angular / SQL Specialist)</h3>
+    <h3 class="title">{{ title }}</h3>
   </div>
 
   <section class="section summary">
     <h4 class="section-title">/summary</h4>
     <p>
-      I'm a passionate full stack developer who thrives on solving tough technical challenges.
-      With over six years of experience working across multiple departments in a Fortune 100 environment,
-      I’ve modernized legacy systems, built applications from scratch, and helped drive secure, scalable,
-      cloud-based solutions. I take pride in my ability to quickly understand new tools, adapt to evolving
-      tech stacks, and deliver clean, maintainable code. 
+      {{ summary1 }}
     </p>
     <p>
-      Currently looking to transition from a contract position to a full-time role where I can continue
-      solving meaningful problems, contribute to impactful projects, and grow with a team that values ownership and innovation.
+      {{ summary2 }}
     </p>
   </section>
 
   <section class="section work-experience">
     <h4 class="section-title">/work experience</h4>
-
-    <div class="job">
+    <div class="job" *ngFor="let job of jobs">
       <div class="job-header">
-        <span class="job-title">Full Stack Developer – Infosys &#64; Kroger</span>
+        <span class="job-title">{{ job.jobTitle }}</span>
         <br>
-        <span class="job-dates">Feb 2019 – Present</span>
+        <span class="job-dates">{{ job.jobDates }}</span>
       </div>
       <p>
-        Contributed to enterprise-wide application modernization across security, facilities, and merchandising teams.
-        Migrated systems from AngularJS to Angular, Java 7 to Java 8+, PCF to GCP, and SQL Server to PostgreSQL.
-        Built internal apps using Java, Angular, Spring Boot, and JPA. Developed REST APIs with OAuth integration (Okta),
-        implemented unit testing, and managed cloud deployments using GitHub Actions, TeamCity, Firebase, and GCP.
-      </p>
-    </div>
-
-    <div class="job">
-      <div class="job-header">
-        <span class="job-title">Java Developer – Revature</span>
-        <br>
-        <span class="job-dates">Oct 2018 – Feb 2019</span>
-      </div>
-      <p>
-        Completed intensive training on enterprise technologies including Java, Spring, SQL, Git, and web development.
-        Worked on full stack applications while preparing for placement with enterprise clients.
+        {{ job.jobDescription }}
       </p>
     </div>
   </section>
 
   <section class="section skills">
     <h4 class="section-title">/skills</h4>
-    <p>
-      <strong>Languages & Frameworks:</strong> Java, JavaScript, TypeScript, Angular, AngularJS, React, Spring, Hibernate, JPA, Node.js, Maven, SQL, HTML, CSS<br>
+    <div *ngFor="let skill of skillsMap | keyvalue">
+      <p><strong>{{skill.key}}</strong> {{ skill.value }}</p>
       <br/>
-      <strong>Cloud & DevOps:</strong> Azure (App Services, Managed Identity, Blob Storage, Azure SQL), GCP (App Hosting, Service Accounts), Firebase, Heroku, GitHub Actions, TeamCity<br>
-      <br/>
-      <strong>Auth & Security:</strong> OAuth, Okta, Azure App Registrations<br>
-      <br/>
-      <strong>Tools & Platforms:</strong> Postman, Hoppscotch, Pivotal Cloud Foundry, Jira, Rally, PrimeNG, Bootstrap<br>
-      <br/>
-      <strong>Databases:</strong> SQL Server, PostgreSQL, NoSQL
-    </p>
+    </div>
   </section>
 
   <section class="section education">
     <h4 class="section-title">/education</h4>
-    <p>Colorado Technical University — B.S. Computer Science (2018)</p>
+    <p> {{ education }}</p>
   </section>
+  <div class="header">
+    <div class="cv-tag"><h1>&lt;/cv&gt;</h1></div>
+  </div>
 </p-panel>

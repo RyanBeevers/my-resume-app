@@ -57,3 +57,55 @@
   color: var(--secondary-text);
   text-transform: lowercase;
 }
+
+
+
+@media print {
+  body {
+    width: 8.5in;
+    height: 11in;
+    margin: 0;
+    padding: 0;
+    transform-origin: top left;
+    transform: scale(1);
+  }
+
+  /* Override any responsive styles that might hide or resize elements */
+  * {
+    display: block !important;
+    box-sizing: border-box;
+    max-width: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Optional: Hide elements you don't want to print (e.g., navigation) */
+  .no-print {
+    display: none;
+  }
+}
+
+@media screen {
+  body {
+    width: 8.5in;
+    height: 11in;
+    margin: 0;
+    padding: 0;
+    transform-origin: top left;
+    transform: scale(1);
+  }
+
+  /* Override any responsive styles that might hide or resize elements */
+  * {
+    display: block !important;
+    box-sizing: border-box;
+    max-width: none !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  /* Optional: Hide elements you don't want to print (e.g., navigation) */
+  .no-print {
+    display: none;
+  }
+}
