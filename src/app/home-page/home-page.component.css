@@ -1,5 +1,5 @@
+/* Shared layout */
 .resume-container {
-  max-width: 900px;
   margin: 2rem auto;
   background-color: var(--panel-bg);
   color: var(--text);
@@ -7,19 +7,28 @@
   padding: 2rem 3rem;
   border-radius: 8px;
   box-shadow: var(--box-shadow);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
   .resume-container {
-    padding-bottom: 50px; /* or height of your mobile nav */
+    padding-bottom: 50px;
   }
 }
 
+/* Typography */
 .cv-tag {
   font-weight: 900;
   font-size: 1.6rem;
   color: var(--accent);
+  display: inline-block;
+}
+
+.hidden-qr-code {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  float: right;
 }
 
 .name {
@@ -27,85 +36,65 @@
   font-weight: 700;
   color: var(--highlight);
   margin: 0;
-  /* text-align: center; */
-
 }
 
 .title {
+  font-size: 1.4rem;
   font-style: italic;
-  font-weight: 400;
+  font-weight: bold;
   color: var(--secondary-text);
-  margin-top: 0.1rem;
-  /* text-align: center; */
-
+  margin-top: 0.2rem;
 }
 
 .section-title {
+  font-size: 1.1rem;
   color: var(--accent);
   border-bottom: 1px solid var(--accent);
+  margin-bottom: 0.5rem;
 }
 
 .job-header {
+  font-size: 1.1rem;
   color: var(--highlight);
+  margin-top: 0.5rem;
 }
 
-.job-title {
+.job-title,
+.job-dates {
   text-transform: lowercase;
 }
 
 .job-dates {
   color: var(--secondary-text);
-  text-transform: lowercase;
 }
 
-
-
-@media print {
-  body {
-    width: 8.5in;
-    height: 11in;
-    margin: 0;
-    padding: 0;
-    transform-origin: top left;
-    transform: scale(1);
-  }
-
-  /* Override any responsive styles that might hide or resize elements */
-  * {
-    display: block !important;
-    box-sizing: border-box;
-    max-width: none !important;
-    width: auto !important;
-    height: auto !important;
-  }
-
-  /* Optional: Hide elements you don't want to print (e.g., navigation) */
-  .no-print {
-    display: none;
-  }
+p {
+  font-size: 1rem;
+  margin: 0.25rem 0;
 }
 
-@media screen {
-  body {
-    width: 8.5in;
-    height: 11in;
-    margin: 0;
-    padding: 0;
-    transform-origin: top left;
-    transform: scale(1);
-  }
+.code-indent {
+  margin: 0 2rem;
+}
 
-  /* Override any responsive styles that might hide or resize elements */
-  * {
-    display: block !important;
-    box-sizing: border-box;
-    max-width: none !important;
-    width: auto !important;
-    height: auto !important;
-  }
+.skills-map {
+  margin-top: 15px;
+}
 
-  /* Optional: Hide elements you don't want to print (e.g., navigation) */
-  .no-print {
-    display: none;
-  }
+/* PDF-specific */
+.pdf-wrapper {
+  font-size: 16px;
+  background-color: white;
+  padding: 20px 20px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.pdf-export-scale {
+  height: 1122px !important;
+  width: 794px !important;
+  box-sizing: border-box !important;
+  margin-top: -40px !important;
+  padding-bottom: 30px !important;
+  font-size: 16px !important;
 }

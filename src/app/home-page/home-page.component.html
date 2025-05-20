@@ -1,53 +1,67 @@
-<div>
-  <button (click)="exportToPdf()">Export to PDF</button>
-</div>
-<p-panel class="resume-panel" [toggleable]="false" [collapsed]="false" styleClass="resume-container" #contentToConvert>
-  <div class="header">
-    <div class="cv-tag"><h1>&lt;cv&gt;</h1></div>
-  </div>
-  <div>
-    <h1 class="name">{{ name }}</h1>
-    <br>
-    <h3 class="title">{{ title }}</h3>
-  </div>
+<div style="margin-top: 25px;">
+  <p-panel class="resume-panel" [toggleable]="false" [collapsed]="false" styleClass="resume-container">
+    <ng-template pTemplate="icons">
+      <button pButton (click)="exportToPdf()"
+        [pTooltip]="'Toggle Light/Dark Mode to Customize Resume Style Before Downloading.'" [disabled]="downloading">
+        Download Resume <i class="pi pi-spin pi-spinner" *ngIf="downloading"></i>
+      </button>
+    </ng-template>
 
-  <section class="section summary">
-    <h4 class="section-title">/summary</h4>
-    <p>
-      {{ summary1 }}
-    </p>
-    <p>
-      {{ summary2 }}
-    </p>
-  </section>
+    <div #contentToConvert>
+      <div class="pdf-wrapper" [style.background-color]="isDarkMode ? '#121212' : '#fff'">
 
-  <section class="section work-experience">
-    <h4 class="section-title">/work experience</h4>
-    <div class="job" *ngFor="let job of jobs">
-      <div class="job-header">
-        <span class="job-title">{{ job.jobTitle }}</span>
-        <br>
-        <span class="job-dates">{{ job.jobDates }}</span>
+        <!-- Opening tag -->
+        <div class="header">
+          <div class="cv-tag">
+            <h1>&lt;cv&gt;</h1>
+          </div>
+          <div class="hidden-qr-code">
+            <img src="frame.png" alt="Logo" class="pdf-export-logo" style="width: 150px; height: 150px; float: right;"
+              [ngStyle]="{ display: downloading ? 'block' : 'none' }" />
+          </div>
+        </div>
+
+        <div class="code-indent">
+          <h1 class="name">{{ name }}</h1>
+          <h3 class="title">{{ title }}</h3>
+
+          <section class="section summary">
+            <h4 class="section-title">/summary</h4>
+            <p>{{ summary1 }}</p>
+            <p>{{ summary2 }}</p>
+          </section>
+
+          <section class="section work-experience">
+            <h4 class="section-title">/work experience</h4>
+            <div class="job" *ngFor="let job of jobs">
+              <div class="job-header">
+                <span class="job-title">{{ job.jobTitle }}</span><br>
+                <span class="job-dates">{{ job.jobDates }}</span>
+              </div>
+              <p>{{ job.jobDescription }}</p>
+            </div>
+          </section>
+
+          <section class="section skills">
+            <h4 class="section-title">/skills</h4>
+            <div *ngFor="let skill of skillsMap | keyvalue">
+              <p class="skills-map"><strong>{{ skill.key }}</strong> {{ skill.value }}</p>
+            </div>
+          </section>
+
+          <section class="section education">
+            <h4 class="section-title">/education</h4>
+            <p><b>{{ education.school }}</b> - {{ education.degree }}</p>
+          </section>
+        </div>
+
+        <!-- Closing tag -->
+        <div class="header">
+          <div class="cv-tag">
+            <h1>&lt;/cv&gt;</h1>
+          </div>
+        </div>
       </div>
-      <p>
-        {{ job.jobDescription }}
-      </p>
     </div>
-  </section>
-
-  <section class="section skills">
-    <h4 class="section-title">/skills</h4>
-    <div *ngFor="let skill of skillsMap | keyvalue">
-      <p><strong>{{skill.key}}</strong> {{ skill.value }}</p>
-      <br/>
-    </div>
-  </section>
-
-  <section class="section education">
-    <h4 class="section-title">/education</h4>
-    <p> {{ education }}</p>
-  </section>
-  <div class="header">
-    <div class="cv-tag"><h1>&lt;/cv&gt;</h1></div>
-  </div>
-</p-panel>
+  </p-panel>
+</div>

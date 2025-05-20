@@ -8,6 +8,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { RouterModule } from '@angular/router';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FormsModule } from '@angular/forms';
+import { ThemeService } from './service/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
   activeItem: MenuItem | null = null;
   isMobile = false;
 
-  constructor(private primeng: PrimeNG, private router: Router) { }
+  constructor(private primeng: PrimeNG, private router: Router, private themeService: ThemeService) { }
 
   ngOnInit() {
     this.primeng.ripple.set(true);
@@ -39,14 +40,15 @@ export class AppComponent implements OnInit {
     ];
     this.activeItem = this.items[0];
 
-    const savedTheme = localStorage.getItem('theme');
-    this.isDark = savedTheme === 'dark';
-
-    // Apply theme class on load
-    const element = document.querySelector('html');
-    if (element && this.isDark) {
-      element.classList.add('my-app-dark');
-    }
+    this.themeService.darkMode$.subscribe(isDark => {
+      this.isDark = isDark;
+      const htmlEl = document.documentElement;
+      if (isDark) {
+        htmlEl.classList.add('my-app-dark');
+      } else {
+        htmlEl.classList.remove('my-app-dark');
+      }
+    });
   }
 
   navigate(item: MenuItem) {
@@ -65,16 +67,7 @@ export class AppComponent implements OnInit {
   }
 
   toggleDarkMode() {
-    const element = document.querySelector('html');
-    if (element) {
-      if (this.isDark) {
-        element.classList.add('my-app-dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        element.classList.remove('my-app-dark');
-        localStorage.setItem('theme', 'light');
-      }
-    }
+    this.themeService.toggleDarkMode(this.isDark);
   }
 
 }
