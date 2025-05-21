@@ -1,0 +1,16 @@
+<div class="terminal">
+  <div *ngFor="let line of displayedLines">
+    <span class="prompt">&gt;</span>{{ line }}
+  </div>
+
+  <div *ngIf="!done">
+    <span class="prompt">&gt;</span>{{ currentLine }}
+    <span class="blinking-cursor"></span>
+  </div>
+
+  <div *ngIf="done" class="options">
+    <button pButton class="p-button-link" routerLink="/" label="Go Home"></button>
+    <button pButton class="p-button-link" routerLink="/projects" label="View Projects"></button>
+    <button pButton class="p-button-link" routerLink="/contact" label="Contact Me"></button>
+  </div>
+</div>
