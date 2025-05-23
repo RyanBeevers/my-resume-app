@@ -1,9 +1,11 @@
-<div style="display: flex; justify-content: end;" *ngIf="isMobile">
+<div class="mobile-dark-toggle" style="display: flex; justify-content: end;" *ngIf="isMobile">
+  <div style="padding: 10px;">
   <p-toggleswitch [(ngModel)]="isDark" (onChange)="toggleDarkMode()">
     <ng-template #handle let-checked="isDark">
       <i [ngClass]="['text-xs', 'pi', isDark ? 'pi-moon' : 'pi-sun']"></i>
     </ng-template>
   </p-toggleswitch>
+  </div>
 </div>
 <nav class="navigation" [ngClass]="{ 'mobile': isMobile, 'desktop': !isMobile }">
   <ng-container *ngIf="!isMobile">
@@ -23,11 +25,7 @@
   <ng-container *ngIf="isMobile">
 
     <div class="mobile-nav">
-      <nav class="custom-nav"
-           [ngStyle]="{
-              'background-color': isDark ? '#333' : '#eee',
-              color: isDark ? '#eee' : '#333'
-           }">
+      <nav class="custom-nav">
         <a
           *ngFor="let item of items"
           [routerLink]="item.routerLink"

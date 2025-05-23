@@ -9,13 +9,14 @@ import { RouterModule } from '@angular/router';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from './service/theme.service';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, CommonModule, ButtonModule,
     MenubarModule, RouterModule, ToggleSwitchModule,
-    FormsModule],
+    FormsModule, ToastModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
     this.primeng.ripple.set(true);
     this.checkViewport();
     this.items = [
-      { label: 'About', icon: 'pi pi-user', routerLink: '/about' },
+      { label: 'Resume', icon: 'pi pi-home', routerLink: '/' },
       { label: 'Experience', icon: 'pi pi-briefcase', routerLink: '/experience' },
       { label: 'Skills', icon: 'pi pi-cog', routerLink: '/skills' },
       { label: 'Projects', icon: 'pi pi-folder', routerLink: '/projects' },

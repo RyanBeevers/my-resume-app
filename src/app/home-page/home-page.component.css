@@ -3,7 +3,6 @@
   margin: 2rem auto;
   background-color: var(--panel-bg);
   color: var(--text);
-  font-family: 'Fira Code', Consolas, 'Courier New', monospace;
   padding: 2rem 3rem;
   border-radius: 8px;
   box-shadow: var(--box-shadow);
@@ -24,11 +23,10 @@
   display: inline-block;
 }
 
-.hidden-qr-code {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  float: right;
+.pdf-export-qr {
+  width: 100px; 
+  height: 100px; 
+  float: right !important;
 }
 
 .name {

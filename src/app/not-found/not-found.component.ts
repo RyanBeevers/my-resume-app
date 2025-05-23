@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
 import {CommonModule} from '@angular/common';
+import { TypingService } from '../service/typing.service';
 
 @Component({
   selector: 'app-not-found',
@@ -25,33 +26,25 @@ export class NotFoundComponent implements OnInit {
   displayedLines: string[] = [];
   done = false;
   currentLine = '';
-  currentLineIndex = 0;
-  currentCharIndex = 0;
-  typingSpeed = 20;
+
+  constructor(private typingService: TypingService) {}
 
   ngOnInit(): void {
-    this.typeLine();
-  }
+    this.typingService.displayedLines$.next([]);
+    this.typingService.currentLine$.next('');
+    
+    this.typingService.displayedLines$.subscribe((lines) => {
+      this.displayedLines = lines;
+      if(this.displayedLines.length === this.fullScript.length) {
+        this.done = true;
+      }
+    });
 
-  typeLine() {
-    if (this.currentLineIndex >= this.fullScript.length) {
-      this.done = true;
-      return;
-    }
+    this.typingService.currentLine$.subscribe((line) => {
+      this.currentLine = line;
+    });
 
-    const fullLine = this.fullScript[this.currentLineIndex];
-    if(this.currentCharIndex < fullLine.length) {
-      this.currentLine += fullLine[this.currentCharIndex];
-      this.currentCharIndex++;
-      setTimeout(() => this.typeLine(), this.typingSpeed);
-    } else {
-      this.displayedLines.push(this.currentLine);
-      this.currentLine = '';
-      this.currentCharIndex = 0;
-      this.currentLineIndex++;
-
-      setTimeout(() => this.typeLine(), this.typingSpeed * 3);
-    }
+    this.typingService.typeScriptLines(this.fullScript);
   }
 
 }

@@ -11,13 +11,13 @@
       <div class="pdf-wrapper" [style.background-color]="isDarkMode ? '#121212' : '#fff'">
 
         <!-- Opening tag -->
-        <div class="header">
+        <div class="header" style="width: 100%; display: flex; justify-content: space-between;">
           <div class="cv-tag">
             <h1>&lt;cv&gt;</h1>
           </div>
-          <div class="hidden-qr-code">
-            <img src="frame.png" alt="Logo" class="pdf-export-logo" style="width: 150px; height: 150px; float: right;"
-              [ngStyle]="{ display: downloading ? 'block' : 'none' }" />
+          <div>
+            <img [src]="(isDarkMode ? 'qr-code-dark.png' : 'qr-code-light.png')" alt="QR Code" class="pdf-export-qr"
+              [ngStyle]="{ display: downloading ? '' : 'none' }" />
           </div>
         </div>
 

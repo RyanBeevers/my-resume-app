@@ -1,1 +1,48 @@
-<p>contact works!</p>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card-wrapper"> <!-- limits max width and centers -->
+
+                <p-card styleClass="editor-theme">
+                    <div class="code-content">
+                        <h1 class="code-comment" *ngIf="!done">// {{ typedHeader }}<span class="cursor">|</span></h1>
+                        <h1 class="code-comment" *ngIf="done">// {{ displayedLines }}<span class="cursor">|</span></h1>
+
+                        <p><span class="keyword">const</span> contactMe <span class="operator">=</span> &#123;</p>
+
+                        <form [formGroup]="contactForm">
+                            <div class="form-wrapper">
+                                <div class="mb-3">
+                                    <label class="key" for="name">name:</label>
+                                    <input id="name" pInputText type="text" formControlName="name" class="form-control"
+                                        placeholder="John Doe" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="key" for="email">email:</label>
+                                    <input id="email" pInputText type="email" formControlName="email" class="form-control"
+                                        placeholder="john@example.com" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="key" for="message">message:</label>
+                                    <textarea id="message" pInputTextarea rows="4" formControlName="message"
+                                        class="form-control" placeholder="Your message..."></textarea>
+                                </div>
+                            </div>
+
+                            <p>&#125;;</p>
+
+                            <div style="display: flex; justify-content: end">
+                                <button pButton type="button" label="Send" severity="success"
+                                    (click)="onSubmit()"></button>
+                            </div>
+
+                        </form>
+                    </div>
+                </p-card>
+            </div>
+
+        </div>
+    </div>
+</div>
