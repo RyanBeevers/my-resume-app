@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { PrimeNG } from 'primeng/config';
 import { MenubarModule } from 'primeng/menubar';
@@ -17,6 +17,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [RouterOutlet, CommonModule, ButtonModule,
     MenubarModule, RouterModule, ToggleSwitchModule,
     FormsModule, ToastModule],
+  providers: [MessageService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

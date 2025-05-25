@@ -1,1 +1,32 @@
-<p>skills works!</p>
+<div class="container mt-5">
+  <div class="terminal card p-3 editor-theme">
+    <h2 class="code-comment">// My Technical Skills</h2>
+
+    <p><span class="keyword">const</span> skills <span class="operator">=</span> &#123;</p>
+
+    <div class="ms-4">
+      <div *ngFor="let skill of displayedSkills" class="skill-line">
+        <span class="key">{{ skill.name }}</span>: 
+        <span class="string">"{{ skill.level }}"</span>,
+        <p-badge 
+          [value]="skill.category" 
+          [severity]="getBadgeColor(skill.category)" 
+          class="ms-2"
+          [pTooltip]="skill.description">
+        </p-badge>
+      </div>
+    </div>
+    <br/>
+    <p>&#125;;</p>
+
+    <div class="mt-4">
+      <p-button 
+        *ngFor="let cat of categories"
+        label="{{ cat }}"
+        class="me-2"
+        (click)="filterCategory(cat)"
+        [severity]="selectedCategory === cat ? 'primary' : 'secondary'">
+      </p-button>
+    </div>
+  </div>
+</div>

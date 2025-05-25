@@ -1,9 +1,38 @@
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10">
-            <div class="card-wrapper"> <!-- limits max width and centers -->
+            <div class="card-wrapper">
 
+                
                 <p-card styleClass="editor-theme">
+                    <div class="code-content">
+                        <h1 class="code-comment" *ngIf="!contactInfoDone">// {{ typedContactMeHeader }}<span class="cursor">|</span></h1>
+                        <h1 class="code-comment" *ngIf="contactInfoDone">// {{ displayedContactMeLines }}<span class="cursor">|</span></h1>
+                    </div>
+
+                    <div>
+                        <p><span class="keyword">const</span> contactInfo <span class="operator">=</span> &#123;</p>
+                        <p class="ms-4">
+                        <span class="key">name</span>: <span class="string">"{{contact.name}}"</span>,<br />
+                        <span class="key">email</span>: 
+                        <a href="mailto:john@example.com" class="string">"{{contact.email}}"</a>,<br />
+                        <span class="key">phone</span>: <span class="string">"{{contact.phone}}"</span>,<br />
+                        <span class="key">location</span>: <span class="string">"{{contact.location}}"</span>,<br />
+                        <span class="key">linkedin</span>: 
+                        <a [href]="contact.linkedin" target="_blank" class="string">"LinkedIn"</a>,<br />
+                        <span class="key">github</span>: 
+                        <a [href]="contact.github" target="_blank" class="string">"Github"</a>,<br />
+                        <span class="key">resume</span>: 
+                        <a href="/assets/resume.pdf" target="_blank" class="string">"Download Resume"</a>
+                        </p>
+
+                        <p>&#125;;</p>
+                    </div>
+                </p-card>
+            </div>
+            
+            <div class="card-wrapper">
+                <p-card styleClass="editor-theme" [style]="{marginTop: '50px'}">
                     <div class="code-content">
                         <h1 class="code-comment" *ngIf="!done">// {{ typedHeader }}<span class="cursor">|</span></h1>
                         <h1 class="code-comment" *ngIf="done">// {{ displayedLines }}<span class="cursor">|</span></h1>
@@ -25,6 +54,13 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label class="key" for="phone">phoneNumber:</label>
+                                    <p-inputmask mask="(999) 999-9999" formControlName="phone"  id="phone" [style]="{width: '100%'}"
+                                            placeholder="(999) 999-9999" />
+
+                                </div>
+
+                                <div class="mb-3">
                                     <label class="key" for="message">message:</label>
                                     <textarea id="message" pInputTextarea rows="4" formControlName="message"
                                         class="form-control" placeholder="Your message..."></textarea>
@@ -41,6 +77,7 @@
                         </form>
                     </div>
                 </p-card>
+
             </div>
 
         </div>

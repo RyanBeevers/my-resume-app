@@ -1,0 +1,32 @@
+.terminal {
+  font-family: 'Fira Code', monospace;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.code-comment {
+  color: #6a9955;
+}
+
+.keyword {
+  color: #569cd6;
+}
+
+.operator {
+  color: #d4d4d4;
+}
+
+.key {
+  color: #9cdcfe;
+}
+
+.string {
+  color: #ce9178;
+}
+
+.skill-line {
+  line-height: 2rem;
+  white-space: nowrap;
+}
