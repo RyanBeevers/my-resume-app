@@ -9,6 +9,10 @@
   line-height: 1.6;
 }
 
+.p-panel-header-background {
+  background-color: transparent !important;
+}
+
 @media (max-width: 768px) {
   .resume-container {
     padding-bottom: 20px;

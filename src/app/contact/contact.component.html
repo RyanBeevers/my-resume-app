@@ -18,7 +18,7 @@
             <span class="key">location</span>: <span class="string">"{{contact.location}}"</span>,<br />
             <span class="key">linkedin</span>: <a [href]="contact.linkedin" target="_blank" class="string">"LinkedIn"</a>,<br />
             <span class="key">github</span>: <a [href]="contact.github" target="_blank" class="string">"Github"</a>,<br />
-            <span class="key">resume</span>: <a href="/assets/resume.pdf" target="_blank" class="string">"Download Resume"</a>
+            <span class="key">resume</span>: <a [href]="isDarkMode ? 'resume-dark.pdf' : 'resume-light.pdf'" target="_blank" class="string">"Download Resume"</a>
           </p>
           <p>&#125;;</p>
         </div>

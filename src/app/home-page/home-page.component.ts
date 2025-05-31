@@ -80,8 +80,8 @@ export class HomePageComponent implements OnInit {
 
 
   exportToPdf() {
-    const isSmallScreen = window.innerWidth <= 768;
     this.downloading = true;
+    const isSmallScreen = window.innerWidth <= 768;
     if (isSmallScreen) {
       // Static download for smaller screens
       const link = document.createElement('a');
@@ -122,11 +122,38 @@ export class HomePageComponent implements OnInit {
 
       // Add the image at (sidePadding, yOffset) with calculated size
       pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
+      // Load correct QR code based on theme
+      const qrImagePath = this.isDarkMode
+        ? 'qr-code-dark.png'
+        : 'qr-code-light.png';
 
+      const qrSize = 25; // in mm
+      const qrX = pageWidth - qrSize - 10; // 5mm from right edge
+      const qrY = 10; // 5mm from top
 
-      pdf.save('Ryan Beevers Resume.pdf');
+      const qrImg = new Image();
+      qrImg.src = qrImagePath;
 
-      this.downloading = false;
+      qrImg.onload = () => {
+        const canvasQr = document.createElement('canvas');
+        canvasQr.width = qrImg.width;
+        canvasQr.height = qrImg.height;
+        const ctx = canvasQr.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(qrImg, 0, 0);
+          const qrDataUrl = canvasQr.toDataURL('image/png');
+          pdf.addImage(qrDataUrl, 'PNG', qrX, qrY, qrSize, qrSize);
+        }
+
+        pdf.save('Ryan Beevers Resume.pdf');
+        this.downloading = false;
+      };
+
+      qrImg.onerror = () => {
+        console.error('QR image failed to load.');
+        pdf.save('Ryan Beevers Resume.pdf');
+        this.downloading = false;
+      };
     });
   }
 

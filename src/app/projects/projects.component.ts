@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
   styles: [`
     .projects-container {
       max-width: 700px;
-      margin: 2rem auto;
+      margin-top: 55px;
       text-align: center;
       color: var(--text, #eee);
     }

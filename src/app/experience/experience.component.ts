@@ -1,6 +1,7 @@
 // experience.component.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CardModule } from 'primeng/card';
 
 interface Job {
   company: string;
@@ -15,7 +16,7 @@ interface Job {
   selector: 'app-experience',
   templateUrl: './experience.component.html',
   styleUrls: ['./experience.component.css'],
-  imports: [CommonModule]
+  imports: [CommonModule, CardModule]
 })
 export class ExperienceComponent {
   jobs: Job[] = [

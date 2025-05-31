@@ -166,7 +166,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   downloadResume() {
       const link = document.createElement('a');
-      link.href = this.isDarkMode ? 'resume-dark.pdf' : 'resume-light.pdf';
+      link.href = this.isDarkMode ? 'public/resume-dark.pdf' : 'public/resume-light.pdf';
       link.download = 'Ryan Beevers Resume.pdf';
       link.click();
       return;

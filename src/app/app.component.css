@@ -39,7 +39,7 @@
   top: 0px;       /* distance from top */
   right: 10px;     /* distance from right */
   z-index: 1000;   /* on top of other content */
-  background: var(--background-transparent);
+  background: transparent;
   border-radius: 4px;
   margin-bottom: 10px;
   width: 100%;
