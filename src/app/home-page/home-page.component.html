@@ -1,10 +1,12 @@
 <div style="margin-top: 25px;">
   <p-panel class="resume-panel" [toggleable]="false" [collapsed]="false" styleClass="resume-container">
     <ng-template pTemplate="icons">
-      <button pButton (click)="exportToPdf()"
+      <p-button size="small" (click)="exportToPdf()"
         [pTooltip]="'Toggle Light/Dark Mode to Customize Resume Style Before Downloading.'" [disabled]="downloading">
-        Download Resume <i class="pi pi-spin pi-spinner" *ngIf="downloading"></i>
-      </button>
+        Download Resume
+        <i class="pi pi-spin pi-spinner" *ngIf="downloading"></i>
+        <i class="pi pi-file-pdf" *ngIf="!downloading"></i>
+      </p-button>
     </ng-template>
 
     <div #contentToConvert>
@@ -24,6 +26,19 @@
         <div class="code-indent">
           <h1 class="name">{{ name }}</h1>
           <h3 class="title">{{ title }}</h3>
+
+          <!-- Contact Section -->
+          <section class="section contact">
+            <h4 class="section-title">/contact</h4>
+            <p class="contact-line">Email: <a href="mailto:{{ contact.email }}">{{ contact.email }}</a></p>
+            <p class="contact-line">Phone: {{ contact.phone }}</p>
+            <p class="contact-line">Website: <a href="{{ contact.website }}" target="_blank" rel="noopener">{{
+                contact.website }}</a></p>
+            <p class="contact-line">Github: <a href="{{ contact.github }}" target="_blank" rel="noopener">{{
+                contact.github }}</a></p>
+            <p class="contact-line">LinkedIn: <a href="{{ contact.linkedin }}" target="_blank" rel="noopener">{{
+                contact.linkedin }}</a></p>
+          </section>
 
           <section class="section summary">
             <h4 class="section-title">/summary</h4>
@@ -58,7 +73,7 @@
         <!-- Closing tag -->
         <div class="header">
           <div class="cv-tag">
-            <h1>&lt;/cv&gt;</h1>
+            <h1>&lt;<span style="margin-left: 1px; margin-right: 1px;">/cv</span>&gt;</h1>
           </div>
         </div>
       </div>

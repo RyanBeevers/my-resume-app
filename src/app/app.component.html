@@ -31,6 +31,7 @@
           *ngFor="let item of items"
           [routerLink]="item.routerLink"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           class="nav-link"
         >
           <i [ngClass]="item.icon"></i>

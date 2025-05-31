@@ -22,6 +22,13 @@ export class HomePageComponent implements OnInit {
 
   name: string = 'Ryan Beevers';
   title: string = '(Full Stack Developer – Java / Angular / SQL Specialist)';
+  contact = {
+    email: 'beeversryan@gmail.com',
+    phone: '(813) 860-4976',
+    website: 'https://ryanbeevers.github.io/my-resume-app/',
+    linkedin: "https://www.linkedin.com/in/ryan-beevers/",
+    github: "https://github.com/RyanBeevers",
+  };
   summary1: string = 'I\'m a passionate full stack developer who thrives on solving tough technical challenges. ' +
     'With over six years of experience working across multiple departments in a Fortune 100 environment, ' +
     'I’ve modernized legacy systems, built applications from scratch, and helped drive secure, scalable, ' +
@@ -39,7 +46,7 @@ export class HomePageComponent implements OnInit {
       'implemented unit testing, and managed cloud deployments using GitHub Actions, TeamCity, Firebase, and GCP.'
   }
   job2: any = {
-    jobTitle: 'Java Developer – Revature',
+    jobTitle: 'Full Stack Developer – Revature',
     jobDates: 'Oct 2018 – Feb 2019',
     jobDescription: 'Completed intensive training on enterprise technologies including Java, Spring, SQL, Git, and web development. ' +
       'Worked on full stack applications while preparing for placement with enterprise clients.'
@@ -68,45 +75,60 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.themeService.darkMode$.subscribe(isDark => {
       this.isDarkMode = isDark;
-      // You can react to dark mode changes here
     });
   }
 
+
   exportToPdf() {
+    const isSmallScreen = window.innerWidth <= 768;
     this.downloading = true;
-    const container = this.contentToConvert.nativeElement;
-    const pdfWrapper = container.querySelector('.pdf-wrapper');
+    if (isSmallScreen) {
+      // Static download for smaller screens
+      const link = document.createElement('a');
+      link.href = this.isDarkMode ? 'resume-dark.pdf' : 'resume-light.pdf';
+      link.download = 'Ryan Beevers Resume.pdf';
+      link.click();
+      this.downloading = false;
+      return;
+    }
+    
+    const pdfWrapper = this.contentToConvert.nativeElement;
+    const bgColor = this.isDarkMode ? '#121212' : '#ffffff';
 
-    pdfWrapper.classList.add('pdf-export-scale');
+    html2canvas(pdfWrapper, {
+      scale: 4,
+      backgroundColor: bgColor,
+      useCORS: true,
+    }).then(canvas => {
+      const pdf = new jsPDF('p', 'mm', 'a4');
 
-    setTimeout(() => {
-      const bgColor = window.getComputedStyle(pdfWrapper).backgroundColor || '#fff';
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const sidePadding = 5;  // Reduce padding to get bigger content
 
-      html2canvas(pdfWrapper, {
-        backgroundColor: bgColor,
-        scale: 3,
-        useCORS: true,
-      }).then(canvas => {
-        pdfWrapper.classList.remove('pdf-export-scale');
+      // Calculate image width and height to fit the page width minus padding
+      const imgWidth = pageWidth - sidePadding * 2;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-        const sidePadding = 10; // mm
-        const imgWidth = 208 - sidePadding * 2;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        const yOffset = (297 - imgHeight) / 2 > 0 ? (297 - imgHeight) / 2 : 0;
+      // Calculate Y offset to center the image vertically if smaller than page
+      const yOffset = imgHeight < pageHeight ? (pageHeight - imgHeight) / 2 : 0;
 
-        const contentDataURL = canvas.toDataURL('image/jpeg', 0.8);
-        const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
 
-        const rgb = bgColor.match(/\d+/g)?.map(Number) || [255, 255, 255];
-        pdf.setFillColor(rgb[0], rgb[1], rgb[2]);
-        pdf.rect(0, 0, 210, 297, 'F');
+      // Set background fill color for whole page
+      const rgb = bgColor.match(/\d+/g)?.map(Number) || [255, 255, 255];
+      pdf.setFillColor(rgb[0], rgb[1], rgb[2]);
+      pdf.rect(0, 0, pageWidth, pageHeight, 'F');
 
-        pdf.addImage(contentDataURL, 'JPEG', sidePadding, yOffset, imgWidth, imgHeight);
+      // Add the image at (sidePadding, yOffset) with calculated size
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageWidth, pageHeight);
 
-        pdf.save('resume.pdf');
-        this.downloading = false;
-      });
-    }, 50);
+
+      pdf.save('Ryan Beevers Resume.pdf');
+
+      this.downloading = false;
+    });
   }
+
 
 }

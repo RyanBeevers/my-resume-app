@@ -5,17 +5,19 @@ import { ButtonModule } from 'primeng/button';
 import { TextareaModule } from 'primeng/textarea';
 import { CardModule } from 'primeng/card';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
 import { TypingService } from '../service/typing.service';
 import emailjs from 'emailjs-com';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { ThemeService } from '../service/theme.service';
 
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, InputTextModule, 
+  imports: [CommonModule, ReactiveFormsModule, InputTextModule, ToastModule,
             TextareaModule, ButtonModule, CardModule, InputMaskModule],
   providers: [MessageService],
   templateUrl: './contact.component.html',
@@ -26,16 +28,16 @@ export class ContactComponent implements OnInit, OnDestroy {
   typedHeader = '';
   displayedLines: string[] = [];
   done = false;
-
   typedContactMeHeader = '';
   displayedContactMeLines: string[] = [];
   contactInfoDone = false;
   contactForm: UntypedFormGroup;
-
+  isDarkMode: any;
   private headerSub?: Subscription;
   private headerLinesSub?: Subscription;
   private contactSub?: Subscription;
   private contactLinesSub?: Subscription;
+  private darkModeSub?: Subscription;
 
   contact = {
     name: "Ryan Beevers",
@@ -47,7 +49,12 @@ export class ContactComponent implements OnInit, OnDestroy {
     resume: "Download PDF"
   }
 
-  constructor(private fb: FormBuilder, private typingService: TypingService, private messageService: MessageService) {
+  constructor(
+    private fb: FormBuilder, 
+    private typingService: TypingService, 
+    private messageService: MessageService,
+    private themeService: ThemeService
+  ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -58,6 +65,9 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.typeContactMeSection();
+    this.darkModeSub = this.themeService.darkMode$.subscribe(isDark => {
+      this.isDarkMode = isDark;
+    });
   }
 
   ngOnDestroy(): void {
@@ -65,6 +75,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.headerLinesSub?.unsubscribe();
     this.contactSub?.unsubscribe();
     this.contactLinesSub?.unsubscribe();
+    this.darkModeSub?.unsubscribe();
   }
 
   
@@ -151,6 +162,14 @@ export class ContactComponent implements OnInit, OnDestroy {
         life: 4000
       });
     }
+  }
+
+  downloadResume() {
+      const link = document.createElement('a');
+      link.href = this.isDarkMode ? 'resume-dark.pdf' : 'resume-light.pdf';
+      link.download = 'Ryan Beevers Resume.pdf';
+      link.click();
+      return;
   }
 
 

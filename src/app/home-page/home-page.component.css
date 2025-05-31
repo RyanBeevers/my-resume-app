@@ -11,7 +11,7 @@
 
 @media (max-width: 768px) {
   .resume-container {
-    padding-bottom: 50px;
+    padding-bottom: 20px;
   }
 }
 
@@ -23,9 +23,13 @@
   display: inline-block;
 }
 
+.section {
+  margin-top: 15px;
+}
+
 .pdf-export-qr {
-  width: 100px; 
-  height: 100px; 
+  width: 100px;
+  height: 100px;
   float: right !important;
 }
 
@@ -49,6 +53,11 @@
   color: var(--accent);
   border-bottom: 1px solid var(--accent);
   margin-bottom: 0.5rem;
+}
+
+.contact-line a {
+  color: var(--primary);
+  text-decoration: none;
 }
 
 .job-header {
@@ -83,7 +92,7 @@ p {
 .pdf-wrapper {
   font-size: 16px;
   background-color: white;
-  padding: 20px 20px;
+  padding: 50px;
   box-sizing: border-box;
   overflow: visible;
 }
@@ -95,4 +104,80 @@ p {
   margin-top: -40px !important;
   padding-bottom: 30px !important;
   font-size: 16px !important;
+}
+
+@media (max-width: 768px) {
+  .resume-container {
+    padding: 0.5rem 0.5rem;
+    margin: 0 auto;
+    width: 100vw;
+    box-sizing: border-box;
+  }
+
+  .code-indent {
+    margin: 0 1rem;
+  }
+
+  .pdf-wrapper {
+    padding: 1rem !important;
+  }
+
+  .name {
+    font-size: 1.6rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .title {
+    font-size: 0.75rem;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .section {
+    margin-top: 15px;
+  }
+
+  .section-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .job-header {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+    margin: 0.1rem 0;
+    line-height: 1.25;
+  }
+
+  .skills-map {
+    margin-top: 5px;
+  }
+
+  .pdf-export-qr {
+    width: 50px;
+    height: 50px;
+    margin-top: 0.25rem;
+  }
+
+  .contact-line {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.85rem;
+    margin: 0.25rem 0;
+  }
+
+  .contact-line::-webkit-scrollbar {
+    display: none;
+  }
+
+  .contact-line a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
 }

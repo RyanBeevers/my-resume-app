@@ -1,1 +1,14 @@
-<p>experience works!</p>
+<!-- experience.component.html -->
+<div class="experience-container">
+  <h2 class="header">&lt;professional experience&gt;</h2>
+  <div *ngFor="let job of jobs" class="job-card">
+    <h3 class="job-header">{{ job.title }} — {{ job.company }}</h3>
+    <p class="date-location">{{ job.startDate }} - {{ job.endDate }} | {{ job.location }}</p>
+    <ul>
+      <li *ngFor="let duty of job.description">{{ duty }}</li>
+    </ul>
+  </div>
+  <h2 class="header">
+    &lt;/professional-experience&gt;
+  </h2>
+</div>
