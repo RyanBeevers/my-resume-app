@@ -142,7 +142,7 @@ export class HomePageComponent implements OnInit {
         if (ctx) {
           ctx.drawImage(qrImg, 0, 0);
           const qrDataUrl = canvasQr.toDataURL('image/png');
-          pdf.addImage(qrDataUrl, 'PNG', qrX, qrY, qrSize, qrSize);
+          pdf.addImage(qrDataUrl, 'PNG', qrX, qrY, qrSize, qrSize+18);
         }
 
         pdf.save('Ryan Beevers Resume.pdf');
