@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { TooltipModule } from 'primeng/tooltip';
@@ -6,7 +6,6 @@ import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
-
 
 interface Skill {
   name: string;
@@ -31,9 +30,7 @@ interface Skill {
       ])
     ])
   ]
-
 })
-
 export class SkillsComponent implements OnInit, OnDestroy {
   skills: Skill[] = [
     { name: 'Angular', level: 'Advanced', category: 'Frontend', description: 'Built enterprise SPAs using Angular.' },
@@ -54,6 +51,7 @@ export class SkillsComponent implements OnInit, OnDestroy {
   showDetails = false;
   isAnimating = false;
   private animationTimeout: any;
+  done = false;
 
   @HostListener('window:resize')
 
@@ -75,6 +73,7 @@ export class SkillsComponent implements OnInit, OnDestroy {
         this.displayedSkills.push(filtered[index]);
         index++;
       } else {
+        this.done = true;
         clearInterval(interval);
       }
     }, 200);

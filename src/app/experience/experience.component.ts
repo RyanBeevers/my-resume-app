@@ -25,7 +25,7 @@ export class ExperienceComponent {
       title: 'Full Stack Developer',
       startDate: 'Feb 2019',
       endDate: 'Present',
-      location: 'Remote / Cincinnati, OH',
+      location: 'Cincinnati, OH',
       description: [
         'Modernized temperature monitoring system using Azure, React, Java 20.',
         'Built scalable APIs and optimized SQL queries for high performance.',
@@ -37,7 +37,7 @@ export class ExperienceComponent {
       title: 'Java Developer Trainee',
       startDate: 'Oct 2018',
       endDate: 'Feb 2019',
-      location: 'Remote',
+      location: 'Tampa, FL',
       description: [
         'Completed intensive Java and web development training.',
         'Built small apps to reinforce object-oriented programming skills.'

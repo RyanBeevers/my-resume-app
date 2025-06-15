@@ -1,15 +1,14 @@
-<div class="container mt-5">
-  <div class="row skill-row">
+<div class="grid mt-6 mb-4">
     <!-- Left Column -->
-    <div class="col-lg-6 col-12 d-flex">
-      <p-card class="w-100 h-100 card-equal-height">
-        <div class="terminal p-3 editor-theme">
+    <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6 h-100">
+      <p-card styleClass="h-full">
+        <div class="p-3 editor-theme">
           <h2 class="code-comment">// My Technical Skills</h2>
 
           <div class="skills-json">
             <p><span class="keyword">const</span> skills <span class="operator">=</span> &#123;</p>
             <div class="ms-4">
-              <div *ngFor="let skill of displayedSkills" class="skill-line" (click)="selectSkill(skill)">
+              <div *ngFor="let skill of displayedSkills" class="skill-line pl-4" (click)="selectSkill(skill)">
                 <span class="key">{{ skill.name }}</span>: 
                 <span class="string">"{{ skill.level }}"</span>,
                 <p-badge 
@@ -23,13 +22,17 @@
             </div>
             <br/>
             <p>&#125;;</p>
+            <div *ngIf="isMobile" class="mobile-instruction">
+              <p class="code-comment"><em>// Tap on a skill to see more details</em></p>
+              <p class="code-comment"><em>// or filter skills using buttons below</em></p>
+            </div>
           </div>
 
           <div class="mt-4 section skills">
             <p-button 
               *ngFor="let cat of categories"
               label="{{ cat }}"
-              class="me-2"
+              class="ml-2"
               (click)="filterCategory(cat)"
               [severity]="selectedCategory === cat ? 'primary' : 'secondary'">
             </p-button>
@@ -39,22 +42,21 @@
     </div>
     
     <!-- Right Column: Desktop Skill Detail Panel -->
-    <div class="col-lg-6 col-12 d-flex">
-      <p-card class="w-100 h-100 card-equal-height">
-        <div class="skill-details-wrapper">
+    <div *ngIf="done" class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6 skill-details h-100">
+      <p-card styleClass="h-full">
+        <div class="editor-theme">
           
           <!-- Default Panel -->
           <div 
-            *ngIf="!selectedSkill && !isMobile" 
             @detailAnimation 
-            class="skill-details-default"
+            class="skill-details-default h-full"
           >
             <h3>Welcome to My Skills</h3>
             <p>Click on any skill to see more details here.</p>
             <p>Hover over badges for quick descriptions.</p>
             <p>Use the category buttons to filter skills.</p>
           </div>
-
+          <hr *ngIf="selectedSkill"/>
           <!-- Selected Skill Panel -->
           <div 
             *ngIf="selectedSkill && !isMobile && showDetails" 
@@ -70,7 +72,6 @@
         </div>
       </p-card>
     </div>
-  </div>
 
   <!-- MOBILE SKILL DETAILS DIALOG -->
   <p-dialog 

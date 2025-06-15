@@ -1,26 +1,12 @@
-.card-wrapper {
-  /* Remove max-width & margin from here */
-  width: 100%;
-}
-
-.editor-theme {
+/* .editor-theme {
   background-color: var(--background);
   color: var(--text);
   padding: 1.5rem;
   border-radius: 0.5rem;
   box-shadow: var(--box-shadow, 0 2px 10px rgba(0, 0, 0, 0.05));
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Important to stretch card height */
-  width: 100%;   /* Important to fill parent col */
-}
+  align-self: stretch;
+} */
 
-/* Optional: spacing fix if needed */
-.form-wrapper {
-  margin-left: 25px;
-}
-
-/* Code highlighting */
 .keyword,
 .key,
 .operator {

@@ -1,9 +1,10 @@
 <p-toast></p-toast>
-<div class="container my-5">
-  <div class="row gx-4 align-items-stretch">
+<div class="grid mt-6 mb-4">
+  
+
     <!-- Contact Info Card -->
-    <div class="col-lg-6 col-md-12 mb-4">
-      <p-card styleClass="editor-theme h-100 w-100 d-flex flex-column">
+    <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6 h-100">
+      <p-card styleClass="editor-theme h-full">
         <div class="code-content">
           <h1 class="code-comment" *ngIf="!contactInfoDone">// {{ typedContactMeHeader }}<span class="cursor">|</span></h1>
           <h1 class="code-comment" *ngIf="contactInfoDone">// {{ displayedContactMeLines }}</h1>
@@ -11,9 +12,9 @@
 
         <div>
           <p><span class="keyword">const</span> contactInfo <span class="operator">=</span> &#123;</p>
-          <p class="ms-4">
+          <p class="ml-4">
             <span class="key">name</span>: <span class="string">"{{contact.name}}"</span>,<br />
-            <span class="key">email</span>: <a href="mailto:john@example.com" class="string">"{{contact.email}}"</a>,<br />
+            <span class="key">email</span>: <a href="mailto:beeversryan@gmail.com" class="string">"{{contact.email}}"</a>,<br />
             <span class="key">phone</span>: <span class="string">"{{contact.phone}}"</span>,<br />
             <span class="key">location</span>: <span class="string">"{{contact.location}}"</span>,<br />
             <span class="key">linkedin</span>: <a [href]="contact.linkedin" target="_blank" class="string">"LinkedIn"</a>,<br />
@@ -26,8 +27,8 @@
     </div>
 
     <!-- Contact Form Card -->
-    <div class="col-lg-6 col-md-12 mb-4">
-      <p-card styleClass="editor-theme h-100 w-100 d-flex flex-column">
+    <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6">
+      <p-card styleClass="editor-theme">
         <div class="code-content">
           <h1 class="code-comment" *ngIf="!done">// {{ typedHeader }}<span class="cursor">|</span></h1>
           <h1 class="code-comment" *ngIf="done">// {{ displayedLines }}<span class="cursor">|</span></h1>
@@ -67,6 +68,5 @@
           </form>
         </div>
       </p-card>
-    </div>
   </div>
 </div>
