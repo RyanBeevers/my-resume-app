@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { asNativeElements, Component, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -12,13 +12,15 @@ import emailjs from 'emailjs-com';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../service/theme.service';
+import { StarFoundDialogComponent } from "../start-found-dialog/start-found-dialog.component";
+import { StarService } from '../service/star.service';
 
 
 @Component({
   selector: 'app-contact',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, InputTextModule, ToastModule,
-            TextareaModule, ButtonModule, CardModule, InputMaskModule],
+    TextareaModule, ButtonModule, CardModule, InputMaskModule, StarFoundDialogComponent],
   providers: [MessageService],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
@@ -48,12 +50,14 @@ export class ContactComponent implements OnInit, OnDestroy {
     github: "https://github.com/RyanBeevers",
     resume: "Download PDF"
   }
+  foundStar: any;
 
   constructor(
     private fb: FormBuilder, 
     private typingService: TypingService, 
     private messageService: MessageService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private starService: StarService
   ) {
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
@@ -141,16 +145,18 @@ export class ContactComponent implements OnInit, OnDestroy {
             severity: 'success',
             summary: 'Message Sent',
             detail: 'Thanks for reaching out. I’ll get back to you soon!',
-            life: 4000
+            life: 30000
           });
           this.contactForm.reset();
+          this.foundStar = true;
+          this.starService.findStar('star2');
         })
         .catch((error) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
             detail: 'Something went wrong. Please try again later.',
-            life: 4000
+            life: 30000
           });
           console.error('Email send error:', error);
         });
@@ -159,7 +165,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         severity: 'error',
         summary: 'Error',
         detail: 'Please fill out all fields!',
-        life: 4000
+        life: 30000
       });
     }
   }
@@ -172,5 +178,8 @@ export class ContactComponent implements OnInit, OnDestroy {
       return;
   }
 
+  closeFoundStarDialog(event: boolean) {
+    this.foundStar = false;
+  }
 
 }

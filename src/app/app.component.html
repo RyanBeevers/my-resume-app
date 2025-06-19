@@ -1,11 +1,11 @@
 <p-toast></p-toast>
 <div class="mobile-dark-toggle" style="display: flex; justify-content: end;" *ngIf="isMobile">
   <div style="padding: 10px;">
-  <p-toggleswitch [(ngModel)]="isDark" (onChange)="toggleDarkMode()">
-    <ng-template #handle let-checked="isDark">
-      <i [ngClass]="['text-xs', 'pi', isDark ? 'pi-moon' : 'pi-sun']"></i>
-    </ng-template>
-  </p-toggleswitch>
+    <p-toggleswitch [(ngModel)]="isDark" (onChange)="toggleDarkMode()">
+      <ng-template #handle let-checked="isDark">
+        <i [ngClass]="['text-xs', 'pi', isDark ? 'pi-moon' : 'pi-sun']"></i>
+      </ng-template>
+    </p-toggleswitch>
   </div>
 </div>
 <nav class="navigation" [ngClass]="{ 'mobile': isMobile, 'desktop': !isMobile }">
@@ -13,11 +13,19 @@
     <div class="desktop-nav">
       <p-menubar [model]="items">
         <ng-template pTemplate="end">
-          <p-toggleswitch [(ngModel)]="isDark" (onChange)="toggleDarkMode()">
-            <ng-template #handle let-checked="isDark">
-              <i [ngClass]="['text-xs', 'pi', isDark ? 'pi-moon' : 'pi-sun']"></i>
-            </ng-template>
-          </p-toggleswitch>
+          <div class="inline-block vertical-align-middle">
+            <p>Welcome, {{ username || 'Guest' }}!</p>
+          </div>
+          <div class="inline-block vertical-align-middle ml-4">
+            <p-toggleswitch [(ngModel)]="isDark" (onChange)="toggleDarkMode()">
+              <ng-template #handle let-checked="isDark">
+                <i [ngClass]="['text-xs', 'pi', isDark ? 'pi-moon' : 'pi-sun']"></i>
+              </ng-template>
+            </p-toggleswitch>
+          </div>
+          <div class="flex justify-content-end" [pTooltip]="starsFound.length + '/5 Stars Found'">
+            <p-rating [(ngModel)]="starsFound.length" disabled/>
+          </div>
         </ng-template>
       </p-menubar>
     </div>
@@ -27,13 +35,8 @@
 
     <div class="mobile-nav">
       <nav class="custom-nav">
-        <a
-          *ngFor="let item of items"
-          [routerLink]="item.routerLink"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="nav-link"
-        >
+        <a *ngFor="let item of items" [routerLink]="item.routerLink" routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }" class="nav-link">
           <i [ngClass]="item.icon"></i>
           <span>{{ item.label }}</span>
         </a>
@@ -41,6 +44,34 @@
     </div>
   </ng-container>
 </nav>
-  <div class="page-container">
-    <router-outlet></router-outlet>
-  </div>
+<div class="page-container">
+  <router-outlet></router-outlet>
+</div>
+
+<p-dialog header="Discover Hidden Stars & Unlock Your Resume Bonus!" [(visible)]="displayDialog" [modal]="true" [closable]="false"
+  [dismissableMask]="false" [style]="{width: 'auto', maxWidth: '500px'}">
+    <ng-template #content>
+      <div class="col-12">
+        <p>
+          Welcome to my interactive resume!<br/><br/>
+          <strong>Why find all the stars?</strong><br/>
+          Each star unlocks a little piece of my skills and story — plus, if you find them all, you’ll earn a special digital badge!<br/><br/>
+          <em>It’s totally useless but kind of fun — a badge to brag about and show off that you explored my work deeply.</em><br/><br/>
+          <strong>How it works:</strong><br/>
+          Enter a username or continue as a guest to track your progress.<br/><br/>
+          Ready to collect them all and claim your badge?
+        </p>
+      </div>
+      <div class="col-12">
+        <label for="username">Enter a username or continue as guest:</label>
+        <input id="username" type="text" pInputText [(ngModel)]="username" placeholder="Your username" />
+      </div>
+    </ng-template>
+    <ng-template #footer>
+      <button pButton type="button" label="Continue as Guest" (click)="startGame(true)"></button>
+      <button pButton class="p-button-help" type="button" label="Start" (click)="startGame(false)"
+        [disabled]="username.trim().length === 0"></button>
+    </ng-template>
+</p-dialog>
+
+<app-star-found-dialog [visible]="foundStar" (closeDialog)="closeFoundStarDialog($event)"></app-star-found-dialog>
