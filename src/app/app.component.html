@@ -6,7 +6,7 @@
         style="font-size: 1.3rem;"></i>
     </ng-container>
   </div>
-  <button *ngIf="starService.hasFoundAllStars()"
+  <button *ngIf="starService.isCompleted$ | async"
     class="floating-cert-btn p-button p-button-help p-button-rounded p-button-icon-only" (click)="showCertificate()">
     <i class="pi pi-graduation-cap"></i>
   </button>
@@ -36,13 +36,13 @@
           </div>
           <div class="flex justify-content-end align-items-center">
             <div
-              [pTooltip]="!starService.hasFoundAllStars() ? starsFound.length + '/5 Stars Found' : 'All Stars Found!'"
+              [pTooltip]="(starService.isCompleted$ | async) ? 'All Stars Found!' : starsFound.length + '/5 Stars Found'"
               tooltipPosition="left">
               <p-rating [disabled]="true" [(ngModel)]="starsFound.length" style="font-size: 1.2rem;"></p-rating>
             </div>
             <div class="ml-2">
-              <p-button pTooltip="Click to View Your Certificate!" variant="text" severity="help"
-                (click)="showCertificate()" icon="pi pi-graduation-cap"></p-button>
+              <p-button *ngIf="starService.isCompleted$ | async" pTooltip="Click to View Your Certificate!"
+                variant="text" severity="help" (click)="showCertificate()" icon="pi pi-graduation-cap"></p-button>
             </div>
           </div>
         </ng-template>
@@ -83,12 +83,12 @@
     <div class="col-12 text-center">
       <p>
         Welcome to the most excessive way to view a resume.<br /><br />
-        <strong>Your Mission (Because Apparently You're Into That):</strong><br />
+        <strong>Your Mission:</strong><br />
         Hunt down all five hidden stars buried across this site like some kind of professional Easter egg
         hunt.<br /><br />
         <em>Why?</em> Great question. Because life is too short for boring resumes!<br /><br />
         <strong>The Reward:</strong><br />
-        A completely unaccredited certificate, boasting your unshakeable determination and elite job-readiness<br />
+        A completely unaccredited certificate, boasting your unshakeable determination<br />
         (obviously).<br /><br />
         Enter a username to track your glory, or just breeze in like a mysterious legend.
       </p>
@@ -97,6 +97,10 @@
       <label for="username">Enter a username or continue as guest:</label>
       <input id="username" type="text" pInputText [(ngModel)]="username" placeholder="Your username" />
     </div>
+  </ng-template>
+  <ng-template #footer>
+    <button pButton type="button" [disabled]="username" label="Continue as a guest" (click)="startGame(true)"></button>
+    <button pButton type="button" [disabled]="!username" label="Start" (click)="startGame(false)"></button>
   </ng-template>
 </p-dialog>
 

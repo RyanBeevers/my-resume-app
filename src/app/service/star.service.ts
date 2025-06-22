@@ -65,9 +65,8 @@ export class StarService {
     );
   }
 
-  hasFoundAllStars(): boolean {
-    const currentStars = this.starsFoundSubject.getValue();
-    return this.allStars.every(star => currentStars.includes(star));
-  }
-
+  allStarsFound$: Observable<boolean> = this.starsFound$.pipe(
+    map(stars => this.allStars.every(star => stars.includes(star)))
+  );
+  
 }

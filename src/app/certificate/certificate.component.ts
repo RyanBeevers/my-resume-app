@@ -15,13 +15,18 @@ export class CertificateComponent {
   @Input() visible: boolean = false;
   @Output() close = new EventEmitter<void>();
   currentDate = new Date().toLocaleDateString();
-  username: string = localStorage.getItem('username') || 'Guest';
+  username: string;
+
+  constructor() {
+    this.username = localStorage.getItem('username') || 'Guest';
+  }
 
   onClose() {
     this.close.emit();
   }
 
-exportCertificate() {
+  exportCertificate() {
+    this.username = localStorage.getItem('username') || 'Guest';
     const el = document.getElementById('certificate-export');
     if (!el) return;
 

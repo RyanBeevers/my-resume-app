@@ -104,10 +104,11 @@ export class AppComponent implements OnInit {
       const alreadyShown = localStorage.getItem('certificate_shown');
 
       if (completed && !alreadyShown) {
-        this.certificateUnlocked = true;
+        this.certificateUnlocked = true;  // shows modal
         this.certificateShown = true;
         localStorage.setItem('certificate_shown', 'true');
       }
+
     });
   }
 
@@ -178,7 +179,6 @@ export class AppComponent implements OnInit {
   }
 
   showStarProgress() {
-    console.log('here');
     this.showStarProgressDialog = true;
   }
 
