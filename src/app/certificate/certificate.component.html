@@ -1,0 +1,47 @@
+<div id="certificate-export" class="certificate-layout hidden-export">
+    <h1 class="title">Certificate of Achievement</h1>
+    <p class="subtitle">is hereby awarded to</p>
+    <h2 class="recipient">{{ username || 'Distinguished Guest' }}</h2>
+    <p class="achievement">For locating all five hidden stars in this interactive resume experience.</p>
+    <p class="achievement">
+        This certificate proudly acknowledges your thorough exploration skills, digital tenacity, and frankly, your
+        commitment to seeing things through. Somewhere, a metaphorical trophy sparkles.
+    </p>
+
+    <div class="seal-and-signature">
+        <img src="seal.png" alt="Official Seal" class="seal" />
+        <div class="signature-block">
+            <p class="signature">— Ryan Beevers</p>
+            <p class="date">{{ currentDate }}</p>
+        </div>
+    </div>
+</div>
+
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [style]="{ width: '400px' }" [baseZIndex]="10000"
+    [breakpoints]="{ '960px': '75vw', '640px': '90vw' }" [dismissableMask]="true" (onHide)="onClose()"
+    [contentStyle]="{ 'text-align': 'center', 'font-family': 'Arial, sans-serif' }">
+    <!-- Custom Header -->
+    <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-graduation-cap text-2xl text-help"></i>
+            <span class="text-lg font-semibold">Certificate of Achievement</span>
+        </div>
+    </ng-template>
+
+    <!-- Dialog Content -->
+    <div class="certificate-content">
+        <h2>Well, Would You Look at That!</h2>
+        <p>
+            You've officially located all five elusive stars—no small feat in a sea of clickable curiosity.
+        </p>
+        <p>
+            This certificate proudly acknowledges your thorough exploration skills, digital tenacity, and frankly, your
+            commitment to seeing things through. Somewhere, a metaphorical trophy sparkles.
+        </p>
+    </div>
+
+    <ng-template #footer>
+        <button pButton label="Download Certificate" icon="pi pi-download" (click)="exportCertificate()"></button>
+        <button pButton type="button" label="Close" (click)="visible = false"></button>
+    </ng-template>
+</p-dialog>

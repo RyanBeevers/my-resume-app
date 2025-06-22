@@ -1,5 +1,16 @@
 <p-toast></p-toast>
-<div class="mobile-dark-toggle" style="display: flex; justify-content: end;" *ngIf="isMobile">
+<div class=" flex justify-content-between" *ngIf="isMobile">
+  <div class="custom-star p-2" (click)="showStarProgress()">
+    <ng-container *ngFor="let star of [1,2,3,4,5]; let i = index">
+      <i class="pi p-1" [ngClass]="i < starsFound.length ? 'pi-star-fill text-primary' : 'pi-star text-gray-400'"
+        style="font-size: 1.3rem;"></i>
+    </ng-container>
+  </div>
+  <button *ngIf="starService.hasFoundAllStars()"
+    class="floating-cert-btn p-button p-button-help p-button-rounded p-button-icon-only" (click)="showCertificate()">
+    <i class="pi pi-graduation-cap"></i>
+  </button>
+
   <div style="padding: 10px;">
     <p-toggleswitch [(ngModel)]="isDark" (onChange)="toggleDarkMode()">
       <ng-template #handle let-checked="isDark">
@@ -23,8 +34,16 @@
               </ng-template>
             </p-toggleswitch>
           </div>
-          <div class="flex justify-content-end" [pTooltip]="starsFound.length + '/5 Stars Found'">
-            <p-rating [(ngModel)]="starsFound.length" disabled/>
+          <div class="flex justify-content-end align-items-center">
+            <div
+              [pTooltip]="!starService.hasFoundAllStars() ? starsFound.length + '/5 Stars Found' : 'All Stars Found!'"
+              tooltipPosition="left">
+              <p-rating [disabled]="true" [(ngModel)]="starsFound.length" style="font-size: 1.2rem;"></p-rating>
+            </div>
+            <div class="ml-2">
+              <p-button pTooltip="Click to View Your Certificate!" variant="text" severity="help"
+                (click)="showCertificate()" icon="pi pi-graduation-cap"></p-button>
+            </div>
           </div>
         </ng-template>
       </p-menubar>
@@ -48,30 +67,61 @@
   <router-outlet></router-outlet>
 </div>
 
-<p-dialog header="Discover Hidden Stars & Unlock Your Resume Bonus!" [(visible)]="displayDialog" [modal]="true" [closable]="false"
-  [dismissableMask]="false" [style]="{width: 'auto', maxWidth: '500px'}">
-    <ng-template #content>
-      <div class="col-12">
-        <p>
-          Welcome to my interactive resume!<br/><br/>
-          <strong>Why find all the stars?</strong><br/>
-          Each star unlocks a little piece of my skills and story — plus, if you find them all, you’ll earn a special digital badge!<br/><br/>
-          <em>It’s totally useless but kind of fun — a badge to brag about and show off that you explored my work deeply.</em><br/><br/>
-          <strong>How it works:</strong><br/>
-          Enter a username or continue as a guest to track your progress.<br/><br/>
-          Ready to collect them all and claim your badge?
-        </p>
+<p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="false" [dismissableMask]="false"
+  [style]="{width: 'auto', maxWidth: '500px'}">
+  <ng-template #header>
+    <div class="text-center">
+      <h4>Discover Hidden Stars & Unlock Your Resume Bonus!</h4>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <div class="text-center">
+      <h4>🚨 Important Career Milestone Detected</h4>
+    </div>
+  </ng-template>
+  <ng-template #content>
+    <div class="col-12 text-center">
+      <p>
+        Welcome to the most excessive way to view a resume.<br /><br />
+        <strong>Your Mission (Because Apparently You're Into That):</strong><br />
+        Hunt down all five hidden stars buried across this site like some kind of professional Easter egg
+        hunt.<br /><br />
+        <em>Why?</em> Great question. Because life is too short for boring resumes!<br /><br />
+        <strong>The Reward:</strong><br />
+        A completely unaccredited certificate, boasting your unshakeable determination and elite job-readiness<br />
+        (obviously).<br /><br />
+        Enter a username to track your glory, or just breeze in like a mysterious legend.
+      </p>
+    </div>
+    <div class="col-12">
+      <label for="username">Enter a username or continue as guest:</label>
+      <input id="username" type="text" pInputText [(ngModel)]="username" placeholder="Your username" />
+    </div>
+  </ng-template>
+</p-dialog>
+
+
+<p-dialog [(visible)]="showStarProgressDialog" [modal]="true" [dismissableMask]="false">
+  <ng-template #header>
+    <div class="text-center">
+      <h4>Star Progress</h4>
+    </div>
+  </ng-template>
+  <ng-template #content>
+    <div class="col-12 text-center">
+      <p *ngIf="starsFound.length<5">
+        You have found {{starsFound.length}} out of 5 Stars!
+      </p>
+      <div *ngIf="starsFound.length===5">
+        <p>You have found all 5 Stars! Congratulations!</p>
+        <p>Tap the Graduation Cap button in the bottom right to claim your certificate!</p>
       </div>
-      <div class="col-12">
-        <label for="username">Enter a username or continue as guest:</label>
-        <input id="username" type="text" pInputText [(ngModel)]="username" placeholder="Your username" />
-      </div>
-    </ng-template>
-    <ng-template #footer>
-      <button pButton type="button" label="Continue as Guest" (click)="startGame(true)"></button>
-      <button pButton class="p-button-help" type="button" label="Start" (click)="startGame(false)"
-        [disabled]="username.trim().length === 0"></button>
-    </ng-template>
+    </div>
+  </ng-template>
+  <ng-template #footer>
+    <button pButton type="button" label="OK" (click)="showStarProgressDialog = false"></button>
+  </ng-template>
 </p-dialog>
 
 <app-star-found-dialog [visible]="foundStar" (closeDialog)="closeFoundStarDialog($event)"></app-star-found-dialog>
+<app-certificate [visible]="certificateUnlocked" (close)="certificateUnlocked = false"></app-certificate>

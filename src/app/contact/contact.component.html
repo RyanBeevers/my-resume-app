@@ -1,73 +1,80 @@
 <p-toast></p-toast>
-<div class="grid mt-6 mb-4">
-  
+<div class="grid mt-4 sm:mt-4 md:mt-7 lg:mt-7 xl:mt-7 mb-4">
 
-    <!-- Contact Info Card -->
-    <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6 h-100">
-      <p-card styleClass="editor-theme h-full">
-        <div class="code-content">
-          <h1 class="code-comment" *ngIf="!contactInfoDone">// {{ typedContactMeHeader }}<span class="cursor">|</span></h1>
-          <h1 class="code-comment" *ngIf="contactInfoDone">// {{ displayedContactMeLines }}</h1>
-        </div>
+  <!-- Contact Info Card -->
+  <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6 h-100">
+    <p-card styleClass="editor-theme h-full">
+      <div class="code-content">
+        <h1 class="code-comment" *ngIf="!contactInfoDone">// {{ typedContactMeHeader }}<span class="cursor">|</span>
+        </h1>
+        <h1 class="code-comment" *ngIf="contactInfoDone">// {{ displayedContactMeLines }}</h1>
+      </div>
 
-        <div>
-          <p><span class="keyword">const</span> contactInfo <span class="operator">=</span> &#123;</p>
-          <p class="ml-4">
-            <span class="key">name</span>: <span class="string">"{{contact.name}}"</span>,<br />
-            <span class="key">email</span>: <a href="mailto:beeversryan@gmail.com" class="string">"{{contact.email}}"</a>,<br />
-            <span class="key">phone</span>: <span class="string">"{{contact.phone}}"</span>,<br />
-            <span class="key">location</span>: <span class="string">"{{contact.location}}"</span>,<br />
-            <span class="key">linkedin</span>: <a [href]="contact.linkedin" target="_blank" class="string">"LinkedIn"</a>,<br />
-            <span class="key">github</span>: <a [href]="contact.github" target="_blank" class="string">"Github"</a>,<br />
-            <span class="key">resume</span>: <a [href]="isDarkMode ? 'resume-dark.pdf' : 'resume-light.pdf'" target="_blank" class="string">"Download Resume"</a>
-          </p>
+      <div>
+        <p><span class="keyword">const</span> contactInfo <span class="operator">=</span> &#123;</p>
+        <p class="ml-4">
+          <span class="key">name</span>: <span class="string">"{{contact.name}}"</span>,<br />
+          <span class="key">email</span>: <a href="mailto:beeversryan@gmail.com"
+            class="string">"{{contact.email}}"</a>,<br />
+          <span class="key">phone</span>: <span class="string">"{{contact.phone}}"</span>,<br />
+          <span class="key">location</span>: <span class="string">"{{contact.location}}"</span>,<br />
+          <span class="key">linkedin</span>: <a [href]="contact.linkedin" target="_blank"
+            class="string">"LinkedIn"</a>,<br />
+          <span class="key">github</span>: <a (click)="openLink(contact.github)" target="_blank" class="string"
+            style="text-decoration: underline; cursor: pointer">"Github"</a>,<br />
+          <span class="key">resume</span>: <a [href]="isDarkMode ? 'resume-dark.pdf' : 'resume-light.pdf'"
+            target="_blank" class="string">"Download Resume"</a>
+        </p>
+        <p>&#125;;</p>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Contact Form Card -->
+  <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6">
+    <p-card styleClass="editor-theme">
+      <div class="code-content">
+        <h1 class="code-comment" *ngIf="!done">// {{ typedHeader }}<span class="cursor">|</span></h1>
+        <h1 class="code-comment" *ngIf="done">// {{ displayedLines }}<span class="cursor">|</span></h1>
+
+        <p><span class="keyword">const</span> contactMe <span class="operator">=</span> &#123;</p>
+
+        <form [formGroup]="contactForm">
+          <div class="form-wrapper">
+            <div class="mb-3">
+              <label class="key" for="name">name:</label>
+              <input id="name" pInputText type="text" formControlName="name" class="form-control"
+                placeholder="John Doe" />
+            </div>
+
+            <div class="mb-3">
+              <label class="key" for="email">email:</label>
+              <input id="email" pInputText type="email" formControlName="email" class="form-control"
+                placeholder="john@example.com" />
+            </div>
+
+            <div class="mb-3">
+              <label class="key" for="phone">phoneNumber:</label>
+              <p-inputmask mask="(999) 999-9999" formControlName="phone" id="phone" [style]="{width: '100%'}"
+                placeholder="(999) 999-9999" />
+            </div>
+
+            <div class="mb-3">
+              <label class="key" for="message">message:</label>
+              <textarea id="message" pInputTextarea rows="4" formControlName="message" class="form-control"
+                placeholder="Your message..."></textarea>
+            </div>
+          </div>
+
           <p>&#125;;</p>
-        </div>
-      </p-card>
-    </div>
 
-    <!-- Contact Form Card -->
-    <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6">
-      <p-card styleClass="editor-theme">
-        <div class="code-content">
-          <h1 class="code-comment" *ngIf="!done">// {{ typedHeader }}<span class="cursor">|</span></h1>
-          <h1 class="code-comment" *ngIf="done">// {{ displayedLines }}<span class="cursor">|</span></h1>
-
-          <p><span class="keyword">const</span> contactMe <span class="operator">=</span> &#123;</p>
-
-          <form [formGroup]="contactForm">
-            <div class="form-wrapper">
-              <div class="mb-3">
-                <label class="key" for="name">name:</label>
-                <input id="name" pInputText type="text" formControlName="name" class="form-control" placeholder="John Doe" />
-              </div>
-
-              <div class="mb-3">
-                <label class="key" for="email">email:</label>
-                <input id="email" pInputText type="email" formControlName="email" class="form-control" placeholder="john@example.com" />
-              </div>
-
-              <div class="mb-3">
-                <label class="key" for="phone">phoneNumber:</label>
-                <p-inputmask mask="(999) 999-9999" formControlName="phone" id="phone" [style]="{width: '100%'}"
-                  placeholder="(999) 999-9999" />
-              </div>
-
-              <div class="mb-3">
-                <label class="key" for="message">message:</label>
-                <textarea id="message" pInputTextarea rows="4" formControlName="message"
-                  class="form-control" placeholder="Your message..."></textarea>
-              </div>
-            </div>
-
-            <p>&#125;;</p>
-
-            <div style="display: flex; justify-content: end">
-              <button pButton type="button" label="Send" severity="success" (click)="onSubmit()"></button>
-            </div>
-          </form>
-        </div>
-      </p-card>
+          <div style="display: flex; justify-content: end">
+            <button pButton type="button" label="Send" severity="success" [disabled]="sendingEmail"
+              [icon]="sendingEmail ? 'pi pi-spin pi-spinner' :''" (click)="onSubmit()"></button>
+          </div>
+        </form>
+      </div>
+    </p-card>
   </div>
 </div>
 

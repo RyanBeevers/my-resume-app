@@ -36,9 +36,9 @@
 
 .mobile-dark-toggle {
   position: fixed;
-  top: 0px;       /* distance from top */
-  right: 10px;     /* distance from right */
-  z-index: 1000;   /* on top of other content */
+  top: 0px;
+  right: 10px;
+  z-index: 1000;
   background: transparent;
   border-radius: 4px;
   margin-bottom: 10px;
@@ -48,19 +48,38 @@
 
 .mobile-nav .nav-link {
   display: flex;
-  flex-direction: column; /* stack vertically */
-  align-items: center;    /* center horizontally */
-  justify-content: center; /* center vertically if needed */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   color: var(--text);
   font-size: 0.9rem;
 }
 
 .mobile-nav .nav-link.active {
-  color: var(--primary);      /* Highlight color */
-  font-weight: bold;           /* Make text bold */
+  color: var(--primary);
+  font-weight: bold;
 }
 
 .mobile-nav .nav-link.active i {
-  color: var(--primary);      /* Highlight icon color too */
+  color: var(--primary);
+}
+
+.floating-cert-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: pop-in 0.6s ease;
+}
+
+.mobile-stars-found {
+  position: fixed;
+  top: 15px;
+  z-index: 1000;
+  background: transparent;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  width: 100%;
 }

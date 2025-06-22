@@ -29,11 +29,11 @@ export class HomePageComponent implements OnInit {
     linkedin: "https://www.linkedin.com/in/ryan-beevers/",
     github: "https://github.com/RyanBeevers",
   };
-  summary1: string = 'I\'m a passionate full stack developer who thrives on solving tough technical challenges. ' +
-    'With over six years of experience working across multiple departments in a Fortune 100 environment, ' +
-    'I’ve modernized legacy systems, built applications from scratch, and helped drive secure, scalable, ' +
-    'cloud-based solutions. I take pride in my ability to quickly understand new tools, adapt to evolving ' +
-    'tech stacks, and deliver clean, maintainable code.';
+  tagline: string = 'Resourceful problem solver with a track record of delivering secure, high-performing web applications in fast-paced enterprise environments.';
+  summary1: string = 'I\'m a full stack developer who thrives on untangling complex problems and building elegant, scalable solutions. ' +
+    'With six years of experience in modernizing enterprise systems, I specialize in solving high-impact technical challenges across both front and back end. ' +
+    'Whether I’m migrating legacy applications, optimizing cloud deployments, or integrating secure APIs, I bring a relentless curiosity, ' +
+    'resourcefulness, and a drive to deliver clean, maintainable code that makes a difference.';
   summary2: string = 'Currently looking to transition from a contract position to a full-time role where I can continue\n' +
     'solving meaningful problems, contribute to impactful projects, and grow with a team that values ownership and innovation.';
   jobs: any[] = [];
@@ -52,7 +52,7 @@ export class HomePageComponent implements OnInit {
       'Worked on full stack applications while preparing for placement with enterprise clients.'
   }
   skillsMap: Map<any, string> = new Map([
-    ['Languages & Frameworks:', 'Java, JavaScript, TypeScript, Angular, AngularJS, React, Spring, Hibernate, JPA, Node.js, Maven, SQL, HTML, CSS'],
+    ['Languages & Frameworks:', 'Java, JavaScript, TypeScript, Angular, AngularJS, React, Spring, Hibernate, JPA, Node.js, Maven, SQL, HTML, CSS, Python'],
     ['Cloud & DevOps:', 'Azure (App Services, Managed Identity, Blob Storage, Azure SQL), GCP (App Hosting, Service Accounts), Firebase, Heroku, GitHub Actions, TeamCity'],
     ['Auth & Security:', 'OAuth, Spring Security, Okta, Azure App Registrations'],
     ['Tools & Platforms:', 'Postman, Hoppscotch, Pivotal Cloud Foundry, Jira, Rally, PrimeNG, Bootstrap'],
@@ -78,7 +78,6 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-
   exportToPdf() {
     this.downloading = true;
     const isSmallScreen = window.innerWidth <= 768;
@@ -91,7 +90,7 @@ export class HomePageComponent implements OnInit {
       this.downloading = false;
       return;
     }
-    
+
     const pdfWrapper = this.contentToConvert.nativeElement;
     const bgColor = this.isDarkMode ? '#121212' : '#ffffff';
 
@@ -104,7 +103,7 @@ export class HomePageComponent implements OnInit {
 
       const pageWidth = 210;
       const pageHeight = 297;
-      const sidePadding = 5;  // Reduce padding to get bigger content
+      const sidePadding = 5;
 
       // Calculate image width and height to fit the page width minus padding
       const imgWidth = pageWidth - sidePadding * 2;
@@ -127,7 +126,7 @@ export class HomePageComponent implements OnInit {
         ? 'qr-code-dark.png'
         : 'qr-code-light.png';
 
-      const qrSize = 25; // in mm
+      const qrSize = 20; // in mm
       const qrX = pageWidth - qrSize - 10; // 5mm from right edge
       const qrY = 10; // 5mm from top
 
@@ -142,7 +141,7 @@ export class HomePageComponent implements OnInit {
         if (ctx) {
           ctx.drawImage(qrImg, 0, 0);
           const qrDataUrl = canvasQr.toDataURL('image/png');
-          pdf.addImage(qrDataUrl, 'PNG', qrX, qrY, qrSize, qrSize+18);
+          pdf.addImage(qrDataUrl, 'PNG', qrX, qrY, qrSize, qrSize + 10);
         }
 
         pdf.save('Ryan Beevers Resume.pdf');
@@ -156,6 +155,5 @@ export class HomePageComponent implements OnInit {
       };
     });
   }
-
 
 }

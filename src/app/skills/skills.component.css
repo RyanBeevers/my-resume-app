@@ -1,4 +1,3 @@
-/* === Skill Line Styling === */
 .skill-line {
   cursor: pointer;
   line-height: 2rem;
@@ -8,16 +7,14 @@
 }
 
 .skill-line:hover {
-  background-color: rgba(100, 149, 237, 0.15);  /* Subtle blue highlight */
+  background-color: rgba(100, 149, 237, 0.15);
   border-radius: 4px;
 }
 
-/* === Badge Styling === */
 .badge {
   cursor: pointer;
 }
 
-/* === Skill Detail Panel === */
 .skill-details-content {
   background-color: var(--panel-bg);
   color: var(--text);
@@ -25,14 +22,12 @@
   padding: 1.5rem;
 }
 
-/* === Default Detail Panel Message === */
 .skill-details-default {
   text-align: center;
   color: #888;
   padding: 2rem;
 }
 
-/* === Wrapper & Animation Classes === */
 .skill-details-wrapper {
   position: relative;
   overflow: hidden;
@@ -56,12 +51,10 @@
   transform: translateX(100%);
 }
 
-/* === Scrollable Skills JSON Section === */
 .skills-json {
   overflow-y: auto;
 }
 
-/* === Responsive Layout Utilities === */
 @media (max-width: 768px) {
   .skill-details {
     display: none;

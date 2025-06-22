@@ -1,4 +1,4 @@
-<div class="grid nested-grid mt-4 mb-4">
+<div class="grid nested-grid mt-4 sm:mt-4 md:mt-7 lg:mt-7 xl:mt-7 mb-4">
 
     <div
         class="portfolio-container col-12 sm:col-12 md:col-10 md:col-offset-1 lg:col-10 lg:col-offset-1 xl:col-10 xl:col-offset-1">
@@ -10,9 +10,9 @@
                 <h3 class="hero-tagline">{{ tagline }}</h3>
                 <div class="hero-buttons">
                     <p-button label="GitHub" icon="pi pi-github" class="p-button-rounded"
-                        [routerLink]="['/github']"></p-button>
+                        (click)="openLink(contact.github)"></p-button>
                     <p-button label="LinkedIn" icon="pi pi-linkedin" class="p-button-rounded p-button-secondary"
-                        [routerLink]="['/linkedin']"></p-button>
+                        (click)="openLink(contact.linkedin)"></p-button>
                 </div>
             </section>
 
@@ -28,6 +28,11 @@
                                 </div>
                             </ng-template>
                             <ng-template #content>
+                                <div class="w-full flex justify-content-center">
+                                    <p class="text-center" style="margin: 0; color: var(--highlight)">
+                                        {{ project.subtitle }}
+                                    </p>
+                                </div>
                                 <p><strong>Team:</strong> {{ project.team }}</p>
                                 <p><strong>Role:</strong> {{ project.role }}</p>
                                 <p><strong>Technologies:</strong> {{ project.techstack.join(', ') }}</p>
@@ -44,14 +49,15 @@
                 <div class="col-12">
                     <h2 class="code-comment">/work experience</h2>
                 </div>
-                <div class="col-12 sm:col-12 md:col-10 md:col-offset-1 lg:col-6 lg:col-offset-3 xl:col-6 xl:col-offset-3">
+                <div
+                    class="col-12 sm:col-12 md:col-10 md:col-offset-1 lg:col-6 lg:col-offset-3 xl:col-6 xl:col-offset-3">
                     <p-timeline [value]="jobs">
                         <ng-template let-job pTemplate="content">
                             <p><strong>{{ job.company }} - {{ job.title }}</strong></p>
                             <h5 *ngIf="job.projects.length">Related Projects</h5>
                             <ul>
                                 <li *ngFor="let project of job.projects">
-                                {{ project.name }}
+                                    {{ project.name }}
                                 </li>
                             </ul>
                         </ng-template>
@@ -65,14 +71,17 @@
     </div>
 </div>
 
-<p-dialog header="{{ selectedProject?.name }}" [(visible)]="showDialog" modal="true" [dismissableMask]="true" (onHide)="hideMoreDetails()">
+<p-dialog header="{{ selectedProject?.name }}" [(visible)]="showDialog" modal="true" [dismissableMask]="true"
+    (onHide)="hideMoreDetails()">
     <ng-template pTemplate="content">
         <p><strong>Team:</strong> {{ selectedProject?.team }}</p>
         <p><strong>Role:</strong> {{ selectedProject?.role }}</p>
-        <p *ngIf="selectedProject"><strong>Technologies:</strong> {{ joinTechstack(this.selectedProject.techstack) }}</p>
+        <p *ngIf="selectedProject"><strong>Technologies:</strong> {{ joinTechstack(this.selectedProject.techstack) }}
+        </p>
         <ul>
             <li *ngFor="let detail of selectedProject?.details">{{ detail }}</li>
         </ul>
     </ng-template>
 </p-dialog>
 
+<app-star-found-dialog [visible]="foundStar" (closeDialog)="onStarDialogClosed()"></app-star-found-dialog>

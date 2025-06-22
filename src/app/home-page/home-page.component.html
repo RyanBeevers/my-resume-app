@@ -1,4 +1,4 @@
-<div style="margin-top: 45px;">
+<div class="mt-3 sm:mt-3 md:mt-7 lg:mt-7 xl:mt-7">
   <p-panel class="resume-panel" [toggleable]="false" [collapsed]="false" styleClass="resume-container">
     <ng-template pTemplate="icons">
       <p-button size="small" (click)="exportToPdf()"
@@ -13,7 +13,7 @@
       <div class="pdf-wrapper" [style.background-color]="isDarkMode ? '#121212' : '#fff'">
 
         <!-- Opening tag -->
-        <div class="header" style="width: 100%; display: flex; justify-content: space-between;">
+        <div class="header w-full flex">
           <div class="cv-tag">
             <h1>&lt;cv&gt;</h1>
           </div>
@@ -22,6 +22,9 @@
         <div class="code-indent">
           <h1 class="name">{{ name }}</h1>
           <h3 class="title">{{ title }}</h3>
+          <div class="code-comment flex justify-content-around">
+            <p>{{ tagline }}</p>
+          </div>
 
           <!-- Contact Section -->
           <section class="section contact">

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface Progress {
+  completed: boolean;
   user_id: string;
   stars_found: string[];
   last_updated?: string;
@@ -13,9 +14,8 @@ export interface Progress {
   providedIn: 'root'
 })
 export class ApiService {
-  
-    private baseUrl = environment.apiBaseUrl;
 
+  private baseUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -34,4 +34,9 @@ export class ApiService {
   addStar(userId: string, starId: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/progress/star`, { user_id: userId, star_id: starId });
   }
+
+  markCompleted(visitorId: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/progress/complete`, { user_id: visitorId });
+  }
+
 }

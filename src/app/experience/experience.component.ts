@@ -27,10 +27,12 @@ export class ExperienceComponent {
       endDate: 'Present',
       location: 'Cincinnati, OH',
       description: [
-        'Modernized temperature monitoring system using Azure, React, Java 20.',
-        'Built scalable APIs and optimized SQL queries for high performance.',
-        'Collaborated with cross-functional teams to deliver critical features.'
-      ]
+        'Architected and deployed scalable full-stack applications supporting thousands of internal users across security, facilities, and merchandising domains.',
+        'Delivered key initiatives including modernizing identity access systems, migrating legacy Java/Angular apps to modern stacks, and building feature-rich dashboards for internal tools.',
+        'Drove cloud adoption by leading migrations from PCF to Azure and GCP, incorporating RBAC, Key Vaults, and CI/CD automation with GitHub Actions and TeamCity.',
+        'Collaborated cross-functionally with stakeholders to deliver robust RESTful APIs, optimized SQL queries, and UI enhancements that improved platform performance by over 30%.',
+        'Mentored junior developers and contributed to knowledge sharing across engineering teams to support large-scale modernization efforts.'
+      ],
     },
     {
       company: 'Revature',
@@ -39,9 +41,10 @@ export class ExperienceComponent {
       endDate: 'Feb 2019',
       location: 'Tampa, FL',
       description: [
-        'Completed intensive Java and web development training.',
-        'Built small apps to reinforce object-oriented programming skills.'
-      ]
+        'Completed an intensive 12-week training program with a focus on full-stack Java development using Spring Boot, Angular, and SQL Server.',
+        'Built an internal GitHub integration app from concept to deployment, gaining practical experience with version control, cloud platforms, and CI/CD workflows.',
+        'Strengthened object-oriented design principles and API development by working on client-facing mock applications under the guidance of senior engineers.'
+      ],
     }
   ];
 }

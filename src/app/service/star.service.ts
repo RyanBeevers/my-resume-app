@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -9,53 +9,65 @@ export class StarService {
   private starsFoundSubject = new BehaviorSubject<string[]>([]);
   starsFound$ = this.starsFoundSubject.asObservable();
 
-  private visitorId: string;
+  private isCompletedSubject = new BehaviorSubject<boolean>(false);
+  isCompleted$ = this.isCompletedSubject.asObservable();
 
-  constructor(private apiService: ApiService) {
-    this.visitorId = localStorage.getItem('visitor_id') || this.generateVisitorId();
-    localStorage.setItem('visitor_id', this.visitorId);
+  private visitorId: string | null = null;
+  private allStars = ['star1', 'star2', 'star3', 'star4', 'star5'];
 
-    // Load stars from backend on service init
-    this.loadStars();
-  }
+  constructor(private apiService: ApiService) { }
 
-  private generateVisitorId(): string {
-    return crypto.randomUUID();
-  }
-
-  private loadStars() {
+  loadStars(visitorId: string) {
+    this.visitorId = visitorId;
     this.apiService.getProgress(this.visitorId).subscribe({
       next: progress => {
-        this.starsFoundSubject.next(progress.stars_found || []);
+        const stars = progress.stars_found || [];
+        const completed = progress.completed || false;
+
+        this.starsFoundSubject.next(stars);
+        this.isCompletedSubject.next(completed);
       },
       error: () => {
         this.starsFoundSubject.next([]);
+        this.isCompletedSubject.next(false);
       }
     });
   }
 
-  findStar(starId: string) {
+  findStar(starId: string): Observable<string> {
     const currentStars = this.starsFoundSubject.getValue();
 
     if (currentStars.includes(starId)) {
-      console.log(`Star ${starId} already found!`);
-      return;
+      return of(`Star ${starId} already found!`);
     }
 
-    this.apiService.addStar(this.visitorId, starId).subscribe({
-      next: () => {
+    if (!this.visitorId) {
+      return of('No visitorId set');
+    }
+
+    return this.apiService.addStar(this.visitorId, starId).pipe(
+      tap(() => {
         const updatedStars = [...currentStars, starId];
         this.starsFoundSubject.next(updatedStars);
-        console.log(`Star ${starId} added!`);
-      },
-      error: err => {
+
+        // Check if all stars have been found
+        const allFound = this.allStars.every(star => updatedStars.includes(star));
+        if (allFound) {
+          this.isCompletedSubject.next(true);
+          this.apiService.markCompleted(this.visitorId!).subscribe();
+        }
+      }),
+      map(() => `Star ${starId} added!`),
+      catchError(err => {
         console.error('Failed to add star', err);
-      }
-    });
+        return of('Failed to add star');
+      })
+    );
   }
 
-  hasFoundAllStars(allStars: string[]): boolean {
+  hasFoundAllStars(): boolean {
     const currentStars = this.starsFoundSubject.getValue();
-    return allStars.every(star => currentStars.includes(star));
+    return this.allStars.every(star => currentStars.includes(star));
   }
+
 }

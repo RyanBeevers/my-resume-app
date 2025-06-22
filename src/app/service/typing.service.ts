@@ -1,4 +1,3 @@
-// typing.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -53,4 +52,5 @@ export class TypingService {
       setTimeout(() => this.typeLine(), this.typingSpeed * 3);
     }
   }
+  
 }

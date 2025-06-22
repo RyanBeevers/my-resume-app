@@ -10,13 +10,15 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { FormsModule } from '@angular/forms';
 import { ThemeService } from './service/theme.service';
 import { ToastModule } from 'primeng/toast';
-import { ApiService, Progress } from './service/api.service';
+import { ApiService } from './service/api.service';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { RatingModule } from 'primeng/rating';
 import { TooltipModule } from 'primeng/tooltip';
-import { StarFoundDialogComponent } from "./start-found-dialog/start-found-dialog.component";
+import { PopoverModule } from 'primeng/popover';
+import { StarFoundDialogComponent } from "./star-found-dialog/star-found-dialog.component";
 import { StarService } from './service/star.service';
+import { CertificateComponent } from "./certificate/certificate.component";
 
 @Component({
   selector: 'app-root',
@@ -24,10 +26,11 @@ import { StarService } from './service/star.service';
   imports: [RouterOutlet, CommonModule, ButtonModule,
     MenubarModule, RouterModule, ToggleSwitchModule,
     FormsModule, ToastModule, DialogModule, InputTextModule,
-    RatingModule, TooltipModule, StarFoundDialogComponent],
+    RatingModule, TooltipModule, StarFoundDialogComponent,
+    CertificateComponent, PopoverModule],
   providers: [MessageService],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
@@ -41,13 +44,17 @@ export class AppComponent implements OnInit {
   starsFound: string[] = [];
   foundStar = false;
   allStars = ['star1', 'star2', 'star3', 'star4', 'star5'];
+  certificateUnlocked = false;
+  certificateShown = false;
+  showPopover: boolean = false;
+  showStarProgressDialog = false;
 
   constructor(
     private primeng: PrimeNG,
     private router: Router,
     private themeService: ThemeService,
     private apiService: ApiService,
-    private starService: StarService
+    public starService: StarService
   ) { }
 
   ngOnInit() {
@@ -79,10 +86,29 @@ export class AppComponent implements OnInit {
     } else {
       this.username = savedUsername ?? '';
       this.trackVisit();
-      this.starService.starsFound$.subscribe(stars => {
-        this.starsFound = stars;
-      });
+      this.starService.loadStars(this.visitorId);  // load stars here, once visitorId is present
+
+      this.subscribeToStarsFound();
+      this.subscribeToCompletedStatus();
     }
+  }
+
+  subscribeToStarsFound() {
+    this.starService.starsFound$.subscribe(stars => {
+      this.starsFound = stars;
+    });
+  }
+
+  subscribeToCompletedStatus() {
+    this.starService.isCompleted$.subscribe(completed => {
+      const alreadyShown = localStorage.getItem('certificate_shown');
+
+      if (completed && !alreadyShown) {
+        this.certificateUnlocked = true;
+        this.certificateShown = true;
+        localStorage.setItem('certificate_shown', 'true');
+      }
+    });
   }
 
   navigate(item: MenuItem) {
@@ -106,35 +132,54 @@ export class AppComponent implements OnInit {
   }
 
   startGame(guest: boolean = false) {
-    if (this.username) {
-      if (guest || this.username.trim()) {
-        if (!guest) {
-          localStorage.setItem('username', this.username.trim());
-        }
-        if (!this.visitorId) {
-          this.visitorId = crypto.randomUUID();
-          localStorage.setItem('visitor_id', this.visitorId);
-        }
-        this.displayDialog = false;
-        this.trackVisit();
+    if (guest || this.username.trim()) {
+      if (!guest) {
+        localStorage.setItem('username', this.username.trim());
       }
+      if (!this.visitorId) {
+        this.visitorId = crypto.randomUUID();
+        localStorage.setItem('visitor_id', this.visitorId);
+      }
+      this.subscribeToStarsFound();
+      this.subscribeToCompletedStatus();
+      this.starService.loadStars(this.visitorId);
+      this.displayDialog = false;
+      this.trackVisit();
     }
   }
 
   trackVisit() {
-    this.apiService.trackVisit(this.visitorId, this.username || undefined)
-      .subscribe({
-        next: res => console.log('Visit logged', res),
-        error: err => console.error('Error logging visit', err)
-      });
+    if (this.visitorId) {
+      this.starService.loadStars(this.visitorId);
+      this.apiService.trackVisit(this.visitorId, this.username || undefined)
+        .subscribe({
+          next: res => console.log('Visit logged', res),
+          error: err => console.error('Error logging visit', err)
+        });
+    }
   }
 
   onFindStar(starId: string) {
-    this.starService.findStar(starId);
+    this.starService.findStar(starId).subscribe(response => {
+      if (response === `Star ${starId} added!`) {
+        this.foundStar = true;
+      }
+      console.log(response);
+    });
   }
 
   closeFoundStarDialog(event: any) {
     this.foundStar = false;
+  }
+
+  showCertificate() {
+    this.certificateUnlocked = true;
+    localStorage.setItem('certificate_shown', 'true');
+  }
+
+  showStarProgress() {
+    console.log('here');
+    this.showStarProgressDialog = true;
   }
 
 }
