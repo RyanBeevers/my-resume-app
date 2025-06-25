@@ -8,6 +8,7 @@ export interface Progress {
   user_id: string;
   stars_found: string[];
   last_updated?: string;
+  completed_at?: Date;
 }
 
 @Injectable({

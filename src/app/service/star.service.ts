@@ -12,6 +12,9 @@ export class StarService {
   private isCompletedSubject = new BehaviorSubject<boolean>(false);
   isCompleted$ = this.isCompletedSubject.asObservable();
 
+  private completedAtSubject = new BehaviorSubject<Date | undefined>(undefined);
+  completedAt$ = this.completedAtSubject.asObservable();
+
   private visitorId: string | null = null;
   private allStars = ['star1', 'star2', 'star3', 'star4', 'star5'];
 
@@ -23,9 +26,10 @@ export class StarService {
       next: progress => {
         const stars = progress.stars_found || [];
         const completed = progress.completed || false;
-
+        const completedAt = progress.completed_at;
         this.starsFoundSubject.next(stars);
         this.isCompletedSubject.next(completed);
+        this.completedAtSubject.next(completedAt);
       },
       error: () => {
         this.starsFoundSubject.next([]);
@@ -55,6 +59,7 @@ export class StarService {
         if (allFound) {
           this.isCompletedSubject.next(true);
           this.apiService.markCompleted(this.visitorId!).subscribe();
+          this.loadStars(this.visitorId!);
         }
       }),
       map(() => `Star ${starId} added!`),

@@ -13,6 +13,7 @@ import html2pdf from 'html2pdf.js';
 })
 export class CertificateComponent {
   @Input() visible: boolean = false;
+  @Input() completedAt?: string;
   @Output() close = new EventEmitter<void>();
   currentDate = new Date().toLocaleDateString();
   username: string;
@@ -45,5 +46,5 @@ export class CertificateComponent {
     }, 100);
   }
 
-
+  
 }

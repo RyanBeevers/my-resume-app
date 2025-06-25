@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
   certificateShown = false;
   showPopover: boolean = false;
   showStarProgressDialog = false;
+  completedAt: Date | undefined;
 
   constructor(
     private primeng: PrimeNG,
@@ -102,13 +103,15 @@ export class AppComponent implements OnInit {
   subscribeToCompletedStatus() {
     this.starService.isCompleted$.subscribe(completed => {
       const alreadyShown = localStorage.getItem('certificate_shown');
-
       if (completed && !alreadyShown) {
         this.certificateUnlocked = true;  // shows modal
         this.certificateShown = true;
         localStorage.setItem('certificate_shown', 'true');
       }
+    });
 
+    this.starService.completedAt$.subscribe(completed => {
+      this.completedAt = completed;
     });
   }
 

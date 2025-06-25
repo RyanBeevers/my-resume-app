@@ -128,4 +128,4 @@
 </p-dialog>
 
 <app-star-found-dialog [visible]="foundStar" (closeDialog)="closeFoundStarDialog($event)"></app-star-found-dialog>
-<app-certificate [visible]="certificateUnlocked" (close)="certificateUnlocked = false"></app-certificate>
+<app-certificate [visible]="certificateUnlocked" (close)="certificateUnlocked = false" [completedAt]="completedAt"></app-certificate>

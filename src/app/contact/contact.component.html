@@ -55,8 +55,13 @@
 
             <div class="mb-3">
               <label class="key" for="phone">phoneNumber:</label>
-              <p-inputmask mask="(999) 999-9999" formControlName="phone" id="phone" [style]="{width: '100%'}"
-                placeholder="(999) 999-9999" />
+              <p-inputmask mask="(999) 999-9999" 
+                           formControlName="phone" 
+                           id="phone"
+                           name="tel"
+                           autocomplete="tel"
+                           [style]="{width: '100%'}"
+                           placeholder="(999) 999-9999" />
             </div>
 
             <div class="mb-3">
