@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
     } else {
       this.username = savedUsername ?? '';
       this.trackVisit();
-      this.starService.loadStars(this.visitorId);  // load stars here, once visitorId is present
+      this.starService.loadStars(this.visitorId);
 
       this.subscribeToStarsFound();
       this.subscribeToCompletedStatus();
