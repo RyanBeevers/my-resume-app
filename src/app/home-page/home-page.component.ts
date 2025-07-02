@@ -43,7 +43,7 @@ export class HomePageComponent implements OnInit {
     jobDescription: 'Contributed to enterprise-wide application modernization across security, facilities, and merchandising teams. ' +
       'Migrated systems from AngularJS to Angular, Java 7 to Java 8+, PCF to GCP, and SQL Server to PostgreSQL. ' +
       'Built internal apps using Java, Angular, Spring Boot, and JPA. Developed REST APIs with OAuth integration (Spring Security, Okta), ' +
-      'implemented unit testing, and managed cloud deployments using GitHub Actions, TeamCity, Firebase, and GCP.'
+      'implemented unit testing, and managed cloud deployments using GitHub Actions, TeamCity, and GCP.'
   }
   job2: any = {
     jobTitle: 'Full Stack Developer – Revature',
